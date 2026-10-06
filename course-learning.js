@@ -47,7 +47,7 @@ async function checkCourseAccess() {
     try {
 
         const response = await fetch(
-            `http://localhost:3000/api/course-access/${user.userId}/${courseId}`
+            `https://coursehub-production-83e3.up.railway.app/api/course-access/${user.userId}/${courseId}`
         );
 
         if (!response.ok) {
