@@ -9,7 +9,7 @@ form.addEventListener("submit", async (event) => {
 
     try {
 
-        const response = await fetch("http://localhost:3000/api/login", {
+const response = await fetch("https://coursehub-production-83e3.up.railway.app/api/login", {
             method: "POST",
 
             headers: {
