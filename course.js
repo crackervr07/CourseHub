@@ -44,7 +44,7 @@ async function loadCourse() {
     try {
 
         const response = await fetch(
-            `http://localhost:3000/api/courses/${courseId}`
+`https://coursehub-production-83e3.up.railway.app/api/courses/${courseId}`
         );
 
 
