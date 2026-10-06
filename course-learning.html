@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Course Learning | CourseHub</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f5f7fb;
+            color: #111827;
+        }
+
+
+        /* =========================
+           NAVBAR
+        ========================== */
+
+        .learning-navbar {
+            height: 70px;
+            padding: 0 6%;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            background: #ffffff;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .learning-logo {
+            font-size: 21px;
+            font-weight: 800;
+            color: #2563eb;
+        }
+
+        .back-dashboard {
+            padding: 9px 15px;
+
+            border-radius: 8px;
+
+            background: #eff6ff;
+            color: #2563eb;
+
+            text-decoration: none;
+
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+
+        /* =========================
+           MAIN
+        ========================== */
+
+        .learning-container {
+            max-width: 1250px;
+
+            margin: auto;
+
+            padding: 30px 25px 60px;
+        }
+
+        .learning-header {
+            margin-bottom: 25px;
+        }
+
+        .learning-category {
+            color: #2563eb;
+
+            font-size: 11px;
+            font-weight: 800;
+
+            letter-spacing: 1px;
+        }
+
+        .learning-header h1 {
+            margin-top: 7px;
+
+            font-size: 30px;
+        }
+
+        .learning-header p {
+            margin-top: 7px;
+
+            color: #6b7280;
+
+            font-size: 14px;
+        }
+
+
+        /* =========================
+           LAYOUT
+        ========================== */
+
+        .learning-layout {
+            display: grid;
+
+            grid-template-columns: 1fr 330px;
+
+            gap: 25px;
+        }
+
+
+        /* =========================
+           VIDEO
+        ========================== */
+
+        .video-section {
+            background: #111827;
+
+            border-radius: 15px;
+
+            overflow: hidden;
+
+            box-shadow:
+                0 10px 30px rgba(0, 0, 0, 0.08);
+        }
+
+        #course-video {
+            width: 100%;
+
+            display: block;
+
+            background: #000;
+
+            min-height: 430px;
+        }
+
+
+        /* =========================
+           LESSON INFO
+        ========================== */
+
+        .lesson-info {
+            margin-top: 20px;
+
+            padding: 25px;
+
+            background: #ffffff;
+
+            border-radius: 15px;
+
+            border: 1px solid #e5e7eb;
+        }
+
+        .lesson-info h2 {
+            font-size: 21px;
+        }
+
+        .lesson-info p {
+            margin-top: 10px;
+
+            color: #6b7280;
+
+            font-size: 14px;
+
+            line-height: 1.6;
+        }
+
+
+        /* =========================
+           SIDEBAR
+        ========================== */
+
+        .lesson-sidebar {
+            background: #ffffff;
+
+            border: 1px solid #e5e7eb;
+
+            border-radius: 15px;
+
+            overflow: hidden;
+        }
+
+        .sidebar-header {
+            padding: 20px;
+
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .sidebar-header h2 {
+            font-size: 18px;
+        }
+
+        .progress-text {
+            margin-top: 8px;
+
+            color: #6b7280;
+
+            font-size: 12px;
+        }
+
+        .progress-bar {
+            width: 100%;
+
+            height: 7px;
+
+            margin-top: 12px;
+
+            background: #e5e7eb;
+
+            border-radius: 20px;
+
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            width: 0%;
+
+            height: 100%;
+
+            background: #2563eb;
+
+            transition: width 0.3s ease;
+        }
+
+
+        /* =========================
+           LESSON LIST
+        ========================== */
+
+        .lesson-list {
+            padding: 10px;
+        }
+
+        .lesson-item {
+            width: 100%;
+
+            padding: 13px;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            border: none;
+
+            border-radius: 9px;
+
+            background: transparent;
+
+            text-align: left;
+
+            cursor: pointer;
+
+            color: #374151;
+
+            font-size: 14px;
+        }
+
+        .lesson-item:hover {
+            background: #f3f4f6;
+        }
+
+        .lesson-item.active {
+            background: #eff6ff;
+
+            color: #2563eb;
+
+            font-weight: 700;
+        }
+
+        .lesson-number {
+            width: 28px;
+            height: 28px;
+
+            flex-shrink: 0;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 50%;
+
+            background: #f3f4f6;
+
+            font-size: 11px;
+        }
+
+        .lesson-item.active .lesson-number {
+            background: #2563eb;
+
+            color: #ffffff;
+        }
+
+
+        /* =========================
+           EMPTY LESSON
+        ========================== */
+
+        .empty-lessons {
+            padding: 25px 15px;
+
+            text-align: center;
+
+            color: #6b7280;
+
+            font-size: 13px;
+        }
+
+
+        /* =========================
+           MOBILE
+        ========================== */
+
+        @media (max-width: 850px) {
+
+            .learning-layout {
+                grid-template-columns: 1fr;
+            }
+
+            #course-video {
+                min-height: 300px;
+            }
+
+        }
+
+
+        @media (max-width: 600px) {
+
+            .learning-navbar {
+                padding: 0 20px;
+            }
+
+            .learning-container {
+                padding: 25px 15px 50px;
+            }
+
+            .learning-header h1 {
+                font-size: 24px;
+            }
+
+            #course-video {
+                min-height: 240px;
+            }
+
+        }
+/* =========================
+   TELEGRAM BUTTON
+========================= */
+
+.telegram-button {
+    display: inline-block;
+
+    margin-top: 20px;
+
+    padding: 12px 20px;
+
+    background: #229ED9;
+
+    color: white;
+
+    text-decoration: none;
+
+    border-radius: 8px;
+
+    font-size: 14px;
+
+    font-weight: 700;
+
+    transition: 0.2s;
+}
+
+.telegram-button:hover {
+    opacity: 0.9;
+
+    transform: translateY(-1px);
+}
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =========================
+         NAVBAR
+    ========================== -->
+
+    <header class="learning-navbar">
+
+        <div class="learning-logo">
+            CourseHub
+        </div>
+
+        <a
+            href="dashboard.html"
+            class="back-dashboard"
+        >
+            ← Dashboard
+        </a>
+
+    </header>
+
+
+
+    <!-- =========================
+         MAIN
+    ========================== -->
+
+    <main class="learning-container">
+
+
+        <!-- COURSE HEADER -->
+
+        <section class="learning-header">
+
+            <span class="learning-category">
+                COURSE
+            </span>
+
+            <h1 id="course-title">
+                Course Title
+            </h1>
+
+            <p>
+                Continue your learning journey 🚀
+            </p>
+
+        </section>
+
+
+
+        <!-- =========================
+             LEARNING LAYOUT
+        ========================== -->
+
+        <div class="learning-layout">
+
+
+            <!-- =========================
+                 LEFT SIDE
+            ========================== -->
+
+            <div>
+
+
+                <!-- VIDEO -->
+
+                <section class="video-section">
+
+                    <video
+                        id="course-video"
+                        controls
+                        preload="metadata"
+                    >
+
+                        <source
+                            src=""
+                            type="video/mp4"
+                        >
+
+                        Your browser does not support video playback.
+
+                    </video>
+
+                </section>
+
+
+
+                <!-- LESSON INFO -->
+
+                <section class="lesson-info">
+
+                    <h2 id="lesson-title">
+                        Lesson 1: Introduction
+                    </h2>
+
+                    <p id="lesson-description">
+
+                        Welcome to the course.
+                        Start learning from the first lesson
+                        and continue step-by-step.
+
+                    </p>
+<a
+    id="telegram-button"
+    href="#"
+    target="_blank"
+    class="telegram-button"
+>
+    📲 Join Course Telegram
+</a>
+                </section>
+
+
+            </div>
+
+
+
+            <!-- =========================
+                 RIGHT SIDEBAR
+            ========================== -->
+
+            <aside class="lesson-sidebar">
+
+
+                <div class="sidebar-header">
+
+                    <h2>
+                        Course Content
+                    </h2>
+
+                    <p
+                        class="progress-text"
+                        id="progress-text"
+                    >
+                        0% Completed
+                    </p>
+
+                    <div class="progress-bar">
+
+                        <div
+                            class="progress-fill"
+                            id="progress-fill"
+                        ></div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- DATABASE LESSONS WILL COME HERE -->
+
+                <div
+                    class="lesson-list"
+                    id="lesson-list"
+                >
+
+                    <div class="empty-lessons">
+                        Loading lessons...
+                    </div>
+
+                </div>
+
+
+            </aside>
+
+
+        </div>
+
+    </main>
+
+
+
+    <!-- =========================
+         JAVASCRIPT
+    ========================== -->
+
+    <script src="course-learning.js"></script>
+
+</body>
+
+</html>

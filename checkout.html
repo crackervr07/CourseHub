@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>Checkout | CourseHub</title>
+
+<link
+    rel="stylesheet"
+    href="style.css"
+>
+
+<style>
+
+    /* =========================================
+       PREMIUM CHECKOUT
+    ========================================= */
+
+    .checkout-page {
+        background: #f5f7fb;
+        min-height: 100vh;
+    }
+
+    /* NAVBAR */
+
+    .checkout-navbar {
+        height: 72px;
+        background: #ffffff;
+        border-bottom: 1px solid #e5e7eb;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 6%;
+    }
+
+    .checkout-logo {
+        font-size: 25px;
+        font-weight: 800;
+        color: #111827;
+        text-decoration: none;
+    }
+
+    .checkout-logo span {
+        color: #2563eb;
+    }
+
+    .secure-checkout {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        color: #374151;
+        font-size: 14px;
+        font-weight: 600;
+        background: #f8fafc;
+        padding: 9px 14px;
+        border: 1px solid #e5e7eb;
+        border-radius: 10px;
+    }
+
+
+    /* MAIN */
+
+    .checkout-container {
+        width: min(1180px, 92%);
+        margin: 0 auto;
+        padding: 42px 0 70px;
+    }
+
+    .checkout-heading {
+        margin-bottom: 30px;
+    }
+
+    .checkout-heading::before {
+        content: "CHECKOUT";
+        display: block;
+        color: #2563eb;
+        font-size: 12px;
+        font-weight: 800;
+        letter-spacing: 1.5px;
+        margin-bottom: 8px;
+    }
+
+    .checkout-heading h1 {
+        margin: 0;
+        color: #111827;
+        font-size: 34px;
+        line-height: 1.2;
+    }
+
+    .checkout-heading p {
+        margin: 9px 0 0;
+        color: #6b7280;
+        font-size: 15px;
+    }
+
+
+    /* LAYOUT */
+
+    .checkout-layout {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 360px;
+        gap: 24px;
+        align-items: start;
+    }
+
+    .checkout-left {
+        display: flex;
+        flex-direction: column;
+        gap: 22px;
+    }
+
+
+    /* CARDS */
+
+    .checkout-card,
+    .order-summary {
+        background: #ffffff;
+        border: 1px solid #e5e7eb;
+        border-radius: 20px;
+        box-shadow: 0 8px 30px rgba(15, 23, 42, 0.05);
+    }
+
+    .checkout-card {
+        padding: 25px;
+    }
+
+    .checkout-card h2,
+    .order-summary h2 {
+        margin: 0;
+        color: #111827;
+        font-size: 20px;
+    }
+
+    .checkout-card h2 {
+        margin-bottom: 20px;
+    }
+
+
+    /* COURSE LIST */
+
+    .checkout-items {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+    }
+
+    .checkout-course {
+        display: grid;
+        grid-template-columns: 145px 1fr auto;
+        gap: 18px;
+        align-items: center;
+        padding: 14px;
+        background: #f8fafc;
+        border: 1px solid #e5e7eb;
+        border-radius: 16px;
+        transition: 0.2s ease;
+    }
+
+    .checkout-course:hover {
+        border-color: #cbd5e1;
+        transform: translateY(-1px);
+    }
+
+    .checkout-course img {
+        width: 145px;
+        height: 100px;
+        display: block;
+        object-fit: cover;
+        border-radius: 12px;
+    }
+
+    .checkout-course-info {
+        min-width: 0;
+    }
+
+    .checkout-course-info > span {
+        display: inline-block;
+        margin-bottom: 5px;
+        color: #2563eb;
+        background: #eff6ff;
+        border-radius: 6px;
+        padding: 4px 8px;
+        font-size: 10px;
+        font-weight: 800;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+    }
+
+    .checkout-course-info h3 {
+        margin: 0 0 7px;
+        color: #111827;
+        font-size: 18px;
+        line-height: 1.3;
+    }
+
+    .checkout-course-info p {
+        margin: 0 0 10px;
+        color: #6b7280;
+        font-size: 13px;
+        line-height: 1.5;
+
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    .checkout-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 7px;
+    }
+
+    .checkout-meta span {
+        background: #ffffff;
+        border: 1px solid #e5e7eb;
+        border-radius: 7px;
+        padding: 5px 8px;
+        color: #6b7280;
+        font-size: 11px;
+    }
+
+    .checkout-course-price {
+        align-self: center;
+        color: #111827;
+        font-size: 19px;
+        white-space: nowrap;
+        padding-right: 5px;
+    }
+
+
+    /* CUSTOMER FORM */
+
+    .checkout-form {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 18px;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        color: #374151;
+        font-size: 13px;
+        font-weight: 700;
+    }
+
+    .form-group input {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 13px 14px;
+        background: #ffffff;
+        border: 1px solid #d1d5db;
+        border-radius: 10px;
+        outline: none;
+        color: #111827;
+        font-size: 14px;
+        transition: 0.2s ease;
+    }
+
+    .form-group input:focus {
+        border-color: #2563eb;
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.10);
+    }
+
+    .form-group input::placeholder {
+        color: #9ca3af;
+    }
+
+
+    /* ORDER SUMMARY */
+
+    .order-summary {
+        padding: 25px;
+        position: sticky;
+        top: 20px;
+    }
+
+    .order-summary h2 {
+        margin-bottom: 22px;
+    }
+
+    .summary-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 15px;
+        padding: 10px 0;
+        color: #6b7280;
+        font-size: 14px;
+    }
+
+    .summary-row strong {
+        color: #111827;
+        font-size: 14px;
+        text-align: right;
+    }
+
+    .summary-row:nth-of-type(3) strong {
+        color: #16a34a;
+        font-size: 12px;
+        letter-spacing: 0.5px;
+    }
+
+    .summary-divider {
+        height: 1px;
+        background: #e5e7eb;
+        margin: 13px 0;
+    }
+
+    .summary-total {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 8px 0 20px;
+    }
+
+    .summary-total span {
+        color: #111827;
+        font-size: 15px;
+        font-weight: 700;
+    }
+
+    .summary-total strong {
+        color: #2563eb;
+        font-size: 26px;
+        font-weight: 800;
+    }
+
+
+    /* PAYMENT BUTTON */
+
+    .checkout-payment-btn {
+        width: 100%;
+        border: none;
+        border-radius: 12px;
+        padding: 15px 18px;
+        background: linear-gradient(
+            135deg,
+            #2563eb,
+            #4f46e5
+        );
+        color: #ffffff;
+        font-size: 15px;
+        font-weight: 700;
+        cursor: pointer;
+        box-shadow: 0 8px 18px rgba(37, 99, 235, 0.22);
+        transition: 0.2s ease;
+    }
+
+    .checkout-payment-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 12px 24px rgba(37, 99, 235, 0.28);
+    }
+
+    .checkout-payment-btn:active {
+        transform: translateY(0);
+    }
+
+    .secure-note {
+        margin: 16px 0 0;
+        padding: 11px 12px;
+        background: #f8fafc;
+        border: 1px solid #e5e7eb;
+        border-radius: 10px;
+        color: #6b7280;
+        font-size: 12px;
+        line-height: 1.5;
+        text-align: center;
+    }
+
+
+    /* MOBILE */
+
+    @media (max-width: 900px) {
+
+        .checkout-layout {
+            grid-template-columns: 1fr;
+        }
+
+        .order-summary {
+            position: static;
+        }
+
+    }
+
+
+    @media (max-width: 650px) {
+
+        .checkout-navbar {
+            height: 64px;
+            padding: 0 5%;
+        }
+
+        .checkout-logo {
+            font-size: 22px;
+        }
+
+        .secure-checkout {
+            font-size: 11px;
+            padding: 7px 9px;
+        }
+
+        .checkout-container {
+            width: 92%;
+            padding: 28px 0 50px;
+        }
+
+        .checkout-heading h1 {
+            font-size: 27px;
+        }
+
+        .checkout-card,
+        .order-summary {
+            padding: 18px;
+            border-radius: 16px;
+        }
+
+        .checkout-course {
+            grid-template-columns: 78px 1fr;
+            gap: 12px;
+        }
+
+        .checkout-course img {
+            width: 78px;
+            height: 68px;
+        }
+
+        .checkout-course-info h3 {
+            font-size: 15px;
+        }
+
+        .checkout-course-info p {
+            font-size: 12px;
+        }
+
+        .checkout-course-price {
+            grid-column: 2;
+            justify-self: end;
+            font-size: 17px;
+            margin-top: -3px;
+        }
+
+        .checkout-meta span {
+            font-size: 10px;
+            padding: 4px 6px;
+        }
+
+        .checkout-form {
+            grid-template-columns: 1fr;
+            gap: 15px;
+        }
+
+    }
+
+</style>
+
+</head>
+
+<body class="checkout-page">
+
+<!-- NAVBAR -->
+
+<header class="checkout-navbar">
+
+    <a
+        href="index.html"
+        class="checkout-logo"
+    >
+        Course<span>Hub</span>
+    </a>
+
+    <div class="secure-checkout">
+        🔒 Secure Checkout
+    </div>
+
+</header>
+
+
+<!-- MAIN -->
+
+<main class="checkout-container">
+
+
+    <div class="checkout-heading">
+
+        <h1>
+            Complete Your Purchase
+        </h1>
+
+        <p>
+            Review your selected courses and continue to payment.
+        </p>
+
+    </div>
+
+
+    <div class="checkout-layout">
+
+
+        <!-- LEFT SIDE -->
+
+        <section class="checkout-left">
+
+
+            <!-- COURSES -->
+
+            <div class="checkout-card">
+
+                <h2>
+                    Your Courses
+                </h2>
+
+                <div
+                    id="checkout-items"
+                    class="checkout-items"
+                ></div>
+
+            </div>
+
+
+            <!-- CUSTOMER -->
+
+            <div class="checkout-card">
+
+                <h2>
+                    Customer Information
+                </h2>
+
+                <div class="checkout-form">
+
+
+                    <div class="form-group">
+
+                        <label for="customer-name">
+                            Full Name
+                        </label>
+
+                        <input
+                            type="text"
+                            id="customer-name"
+                            placeholder="Enter your full name"
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="customer-email">
+                            Email Address
+                        </label>
+
+                        <input
+                            type="email"
+                            id="customer-email"
+                            placeholder="Enter your email address"
+                        >
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+        </section>
+
+
+        <!-- RIGHT SIDE -->
+
+        <aside class="checkout-right">
+
+
+            <div class="order-summary">
+
+                <h2>
+                    Order Summary
+                </h2>
+
+
+                <div class="summary-row">
+
+                    <span>
+                        Courses
+                    </span>
+
+                    <strong id="summary-course">
+                        —
+                    </strong>
+
+                </div>
+
+
+                <div class="summary-row">
+
+                    <span>
+                        Subtotal
+                    </span>
+
+                    <strong id="summary-price">
+                        ₹0
+                    </strong>
+
+                </div>
+
+
+                <div class="summary-row">
+
+                    <span>
+                        Platform Fee
+                    </span>
+
+                    <strong>
+                        FREE
+                    </strong>
+
+                </div>
+
+
+                <div class="summary-divider"></div>
+
+
+                <div class="summary-total">
+
+                    <span>
+                        Total Amount
+                    </span>
+
+                    <strong id="summary-total">
+                        ₹0
+                    </strong>
+
+                </div>
+
+
+                <button
+                    id="proceed-payment"
+                    class="checkout-payment-btn"
+                >
+                    Proceed to Payment →
+                </button>
+
+
+                <p class="secure-note">
+                    🔒 Your payment information is securely handled.
+                </p>
+
+            </div>
+
+
+        </aside>
+
+
+    </div>
+
+
+</main>
+
+
+<!-- CHECKOUT JAVASCRIPT -->
+
+<script src="checkout.js?v=5"></script>
+
+</body>
+
+</html>

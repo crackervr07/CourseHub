@@ -1,0 +1,955 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f5f7fb;
+    color: #111827;
+}
+
+
+/* =========================
+   TOPBAR
+========================= */
+
+.admin-topbar {
+    width: 100%;
+    min-height: 72px;
+    padding: 0 6%;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    background: #ffffff;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.admin-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.admin-brand-icon {
+    width: 42px;
+    height: 42px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 12px;
+
+    background: linear-gradient(
+        135deg,
+        #2563eb,
+        #4f46e5
+    );
+
+    color: #ffffff;
+
+    font-size: 21px;
+    font-weight: 800;
+}
+
+.admin-brand strong {
+    display: block;
+
+    color: #111827;
+
+    font-size: 18px;
+    font-weight: 800;
+}
+
+.admin-brand span {
+    display: block;
+
+    margin-top: 2px;
+
+    color: #6b7280;
+
+    font-size: 11px;
+}
+
+.admin-nav {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+}
+
+.admin-nav a {
+    color: #4b5563;
+
+    text-decoration: none;
+
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.admin-nav a:hover {
+    color: #2563eb;
+}
+
+.admin-logout {
+    padding: 9px 16px;
+
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+
+    background: #ffffff;
+
+    color: #374151;
+
+    font-size: 12px;
+    font-weight: 700;
+
+    cursor: pointer;
+}
+
+.admin-logout:hover {
+    background: #fef2f2;
+    color: #dc2626;
+}
+
+
+/* =========================
+   MAIN
+========================= */
+
+.admin-container {
+    width: 100%;
+    max-width: 1200px;
+
+    margin: 0 auto;
+
+    padding: 45px 25px 80px;
+}
+
+
+/* =========================
+   WELCOME
+========================= */
+
+.admin-welcome {
+    width: 100%;
+
+    padding: 32px 38px;
+
+    margin-bottom: 22px;
+
+    background: linear-gradient(
+        135deg,
+        #eff6ff,
+        #eef2ff
+    );
+
+    border: 1px solid #dbeafe;
+
+    border-radius: 20px;
+}
+
+.admin-welcome-small {
+    color: #2563eb;
+
+    font-size: 10px;
+    font-weight: 800;
+
+    letter-spacing: 1.5px;
+}
+
+.admin-welcome h1 {
+    margin-top: 8px;
+
+    color: #111827;
+
+    font-size: 29px;
+    font-weight: 800;
+}
+
+.admin-welcome > div > p:last-child {
+    margin-top: 7px;
+
+    color: #6b7280;
+
+    font-size: 14px;
+}
+
+
+/* =========================
+   STATS
+========================= */
+
+.admin-stats {
+    width: 100%;
+
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 18px;
+
+    margin-bottom: 28px;
+}
+
+.admin-stat-card {
+    padding: 22px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 15px;
+
+    background: #ffffff;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 15px;
+
+    box-shadow:
+        0 5px 18px rgba(0, 0, 0, 0.03);
+}
+
+.admin-stat-icon {
+    width: 50px;
+    height: 50px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 13px;
+
+    font-size: 22px;
+}
+
+.admin-stat-icon.blue {
+    background: #eff6ff;
+}
+
+.admin-stat-icon.green {
+    background: #ecfdf5;
+}
+
+.admin-stat-icon.orange {
+    background: #fff7ed;
+}
+
+.admin-stat-card span {
+    display: block;
+
+    color: #6b7280;
+
+    font-size: 12px;
+}
+
+.admin-stat-card h2 {
+    margin-top: 4px;
+
+    color: #111827;
+
+    font-size: 25px;
+}
+
+
+/* =========================
+   ADMIN CARDS
+========================= */
+
+.admin-card {
+    width: 100%;
+
+    margin-bottom: 25px;
+
+    padding: 28px;
+
+    background: #ffffff;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 18px;
+
+    box-shadow:
+        0 5px 20px rgba(0, 0, 0, 0.03);
+}
+
+
+/* =========================
+   SECTION HEADING
+========================= */
+
+.admin-section-heading {
+    width: 100%;
+
+    margin-bottom: 25px;
+
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+
+    gap: 25px;
+}
+
+.admin-section-heading span {
+    color: #2563eb;
+
+    font-size: 10px;
+    font-weight: 800;
+
+    letter-spacing: 1.5px;
+}
+
+.admin-section-heading h2 {
+    margin-top: 6px;
+
+    color: #111827;
+
+    font-size: 23px;
+}
+
+.admin-section-heading p {
+    margin-top: 5px;
+
+    color: #6b7280;
+
+    font-size: 13px;
+}
+
+
+/* =========================
+   ADD COURSE FORM
+========================= */
+
+.admin-course-form {
+    display: grid;
+
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: 18px;
+}
+
+.admin-form-group {
+    min-width: 0;
+}
+
+.admin-form-group.full-width {
+    grid-column: 1 / -1;
+}
+
+.admin-form-group label {
+    display: block;
+
+    margin-bottom: 7px;
+
+    color: #374151;
+
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.admin-form-group input,
+.admin-form-group textarea,
+.admin-form-group select {
+    width: 100%;
+
+    padding: 12px 13px;
+
+    border: 1px solid #d1d5db;
+
+    border-radius: 9px;
+
+    outline: none;
+
+    background: #ffffff;
+
+    color: #111827;
+
+    font-family: Arial, Helvetica, sans-serif;
+
+    font-size: 13px;
+}
+
+.admin-form-group input {
+    height: 45px;
+}
+
+.admin-form-group textarea {
+    min-height: 110px;
+
+    resize: vertical;
+}
+
+.admin-form-group input:focus,
+.admin-form-group textarea:focus,
+.admin-form-group select:focus {
+    border-color: #2563eb;
+
+    box-shadow:
+        0 0 0 3px rgba(37, 99, 235, 0.10);
+}
+
+
+/* =========================
+   ADD BUTTON
+========================= */
+
+.admin-form-actions {
+    grid-column: 1 / -1;
+
+    margin-top: 5px;
+
+    display: flex;
+    justify-content: flex-end;
+}
+
+.admin-primary-btn {
+    padding: 12px 20px;
+
+    border: none;
+    border-radius: 9px;
+
+    background: linear-gradient(
+        135deg,
+        #2563eb,
+        #4f46e5
+    );
+
+    color: #ffffff;
+
+    font-size: 13px;
+    font-weight: 700;
+
+    cursor: pointer;
+}
+
+.admin-primary-btn:hover {
+    background: #1d4ed8;
+}
+
+
+/* =========================
+   SEARCH
+========================= */
+
+.admin-course-search {
+    flex-shrink: 0;
+}
+
+.admin-course-search input {
+    width: 250px;
+    height: 42px;
+
+    padding: 0 13px;
+
+    border: 1px solid #d1d5db;
+
+    border-radius: 9px;
+
+    outline: none;
+
+    font-size: 12px;
+}
+
+.admin-course-search input:focus {
+    border-color: #2563eb;
+}
+
+
+/* =========================
+   COURSE ITEM
+========================= */
+
+#admin-course-list {
+    width: 100%;
+}
+
+.admin-course-item {
+    width: 100%;
+
+    padding: 20px 0;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 25px;
+
+    border-top: 1px solid #e5e7eb;
+}
+
+
+/* =========================
+   COURSE LEFT
+========================= */
+
+.admin-course-left {
+    min-width: 0;
+
+    flex: 1;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 18px;
+}
+
+
+/* =========================
+   COURSE THUMBNAIL
+========================= */
+
+.admin-course-thumb {
+    width: 170px;
+    height: 105px;
+
+    flex-shrink: 0;
+
+    display: block;
+
+    object-fit: cover;
+
+    border-radius: 12px;
+
+    background: #e5e7eb;
+
+    border: 1px solid #e5e7eb;
+
+    box-shadow:
+        0 5px 15px rgba(0, 0, 0, 0.06);
+}
+
+
+/* =========================
+   COURSE INFO
+========================= */
+
+.admin-course-info {
+    min-width: 0;
+
+    flex: 1;
+}
+
+.admin-course-info h3 {
+    color: #111827;
+
+    font-size: 17px;
+    font-weight: 800;
+}
+
+.admin-course-info p {
+    margin-top: 7px;
+
+    color: #6b7280;
+
+    font-size: 12px;
+
+    line-height: 1.5;
+
+    display: -webkit-box;
+
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+
+    overflow: hidden;
+}
+
+
+/* =========================
+   COURSE META
+========================= */
+
+.admin-course-meta {
+    margin-top: 10px;
+
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 7px;
+}
+
+.admin-course-meta span {
+    padding: 5px 9px;
+
+    background: #f3f4f6;
+
+    color: #4b5563;
+
+    border-radius: 6px;
+
+    font-size: 10px;
+    font-weight: 700;
+}
+
+.admin-course-meta span:first-child {
+    background: #eff6ff;
+
+    color: #2563eb;
+}
+
+
+/* =========================
+   ACTIONS
+========================= */
+
+.admin-course-actions {
+    flex-shrink: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+}
+
+.admin-edit-btn,
+.admin-delete-btn {
+    padding: 9px 13px;
+
+    border-radius: 8px;
+
+    font-size: 11px;
+    font-weight: 700;
+
+    cursor: pointer;
+}
+
+.admin-edit-btn {
+    border: 1px solid #bfdbfe;
+
+    background: #eff6ff;
+
+    color: #2563eb;
+}
+
+.admin-edit-btn:hover {
+    background: #dbeafe;
+}
+
+.admin-delete-btn {
+    border: 1px solid #fecaca;
+
+    background: #fef2f2;
+
+    color: #dc2626;
+}
+
+.admin-delete-btn:hover {
+    background: #fee2e2;
+}
+
+
+/* =========================
+   NO COURSES
+========================= */
+
+.admin-no-courses {
+    padding: 55px 20px;
+
+    text-align: center;
+
+    color: #6b7280;
+}
+
+.admin-no-courses > div {
+    font-size: 38px;
+}
+
+.admin-no-courses h3 {
+    margin-top: 12px;
+
+    color: #111827;
+
+    font-size: 18px;
+}
+
+.admin-no-courses p {
+    margin-top: 6px;
+
+    font-size: 13px;
+}
+
+
+/* =========================
+   TABLET
+========================= */
+
+@media (max-width: 900px) {
+
+    .admin-course-item {
+        align-items: flex-start;
+    }
+
+    .admin-course-left {
+        width: 100%;
+    }
+
+    .admin-course-actions {
+        flex-shrink: 0;
+    }
+
+}
+
+
+/* =========================
+   TABLET SMALL
+========================= */
+
+@media (max-width: 850px) {
+
+    .admin-stats {
+        grid-template-columns: 1fr;
+    }
+
+    .admin-course-form {
+        grid-template-columns: 1fr;
+    }
+
+    .admin-form-group.full-width {
+        grid-column: auto;
+    }
+
+    .admin-form-actions {
+        grid-column: auto;
+    }
+
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 650px) {
+
+    .admin-topbar {
+        padding: 15px 20px;
+
+        flex-direction: column;
+
+        gap: 14px;
+    }
+
+    .admin-nav {
+        flex-wrap: wrap;
+
+        justify-content: center;
+
+        gap: 10px 15px;
+    }
+
+    .admin-container {
+        padding: 30px 16px 60px;
+    }
+
+    .admin-welcome {
+        padding: 25px;
+    }
+
+    .admin-welcome h1 {
+        font-size: 24px;
+    }
+
+    .admin-card {
+        padding: 20px;
+    }
+
+    .admin-section-heading {
+        flex-direction: column;
+
+        align-items: flex-start;
+    }
+
+    .admin-course-search {
+        width: 100%;
+    }
+
+    .admin-course-search input {
+        width: 100%;
+    }
+
+    .admin-form-actions {
+        justify-content: stretch;
+    }
+
+    .admin-primary-btn {
+        width: 100%;
+    }
+
+    .admin-course-item {
+        flex-direction: column;
+
+        align-items: stretch;
+
+        gap: 15px;
+    }
+
+    .admin-course-left {
+        width: 100%;
+
+        flex-direction: column;
+
+        align-items: stretch;
+
+        gap: 14px;
+    }
+
+    .admin-course-thumb {
+        width: 100%;
+
+        height: 190px;
+
+        border-radius: 12px;
+    }
+
+    .admin-course-info h3 {
+        font-size: 16px;
+    }
+
+    .admin-course-actions {
+        width: 100%;
+    }
+
+    .admin-edit-btn,
+    .admin-delete-btn {
+        flex: 1;
+    }
+
+}
+/* Attractive Add Course Button */
+
+.admin-primary-btn {
+    width: 100%;
+    min-height: 56px;
+    padding: 15px 24px;
+
+    border: none;
+    border-radius: 14px;
+
+    background: linear-gradient(
+        135deg,
+        #2563eb,
+        #4f46e5
+    );
+
+    color: #ffffff;
+
+    font-size: 16px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 12px 25px rgba(37, 99, 235, 0.25);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease;
+}
+
+.admin-primary-btn:hover {
+    background: linear-gradient(
+        135deg,
+        #1d4ed8,
+        #4338ca
+    );
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 16px 32px rgba(37, 99, 235, 0.32);
+}
+
+.admin-primary-btn:active {
+    transform: translateY(0);
+
+    box-shadow:
+        0 8px 18px rgba(37, 99, 235, 0.22);
+}
+.admin-reject-btn {
+    min-width: 150px;
+    height: 52px;
+    padding: 0 24px;
+
+    border: 1px solid #fecaca;
+    border-radius: 12px;
+
+    background: #fff1f2;
+    color: #dc2626;
+
+    font-size: 15px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: all 0.2s ease;
+}
+
+.admin-reject-btn:hover {
+    background: #fee2e2;
+    border-color: #fca5a5;
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 8px 18px rgba(220, 38, 38, 0.12);
+}
+
+.admin-reject-btn:active {
+    transform: translateY(0);
+}
+.payment-action-btn {
+    width: 150px !important;
+    height: 52px !important;
+    padding: 0 20px !important;
+
+    border-radius: 12px !important;
+
+    font-size: 15px !important;
+    font-weight: 700 !important;
+
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    box-sizing: border-box;
+}
+
+.verify-btn {
+    border: none !important;
+    background: linear-gradient(135deg, #2563eb, #4f46e5) !important;
+    color: #fff !important;
+}
+
+.reject-btn {
+    border: 1px solid #fecaca !important;
+    background: #fff1f2 !important;
+    color: #dc2626 !important;
+}
+<button
+    onclick="deleteCourse(${course.id})"
+    class="payment-action-btn delete-btn"
+>
+    ✕ Delete
+</button>
+.delete-btn {
+    border: 1px solid #fecaca !important;
+    background: #fff1f2 !important;
+    color: #dc2626 !important;
+}
+
+.delete-btn:hover {
+    background: #fee2e2 !important;
+    border-color: #fca5a5 !important;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 18px rgba(220, 38, 38, 0.12);
+}

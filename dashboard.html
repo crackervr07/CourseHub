@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Student Dashboard - CourseHub</title>
+
+   <link
+    rel="stylesheet"
+    href="dashboard.css"
+>
+    
+</head>
+
+<body class="dashboard-page">
+
+    <!-- NAVBAR -->
+
+    <header class="dashboard-navbar">
+
+        <a
+            href="index.html"
+            class="dashboard-logo"
+        >
+            Course<span>Hub</span>
+        </a>
+
+        <nav class="dashboard-nav">
+
+            <a href="index.html">
+                Home
+            </a>
+
+            <a href="index.html#courses">
+                Explore Courses
+            </a>
+
+            <button
+                id="logout-btn"
+                class="dashboard-logout"
+            >
+                Logout
+            </button>
+
+        </nav>
+
+    </header>
+
+
+    <!-- DASHBOARD -->
+
+    <main class="dashboard-main">
+
+
+        <!-- WELCOME -->
+
+        <section class="dashboard-welcome">
+
+            <div>
+
+                <span class="dashboard-label">
+                    STUDENT DASHBOARD
+                </span>
+
+                <h1 id="user-name">
+                    Welcome!
+                </h1>
+
+                <p id="user-email">
+                    Manage your learning journey from here.
+                </p>
+
+            </div>
+
+            <div class="dashboard-welcome-icon">
+                🎓
+            </div>
+
+        </section>
+
+
+        <!-- STATS -->
+
+        <section class="student-stats">
+
+            <div class="student-stat-card">
+
+               <div class="student-stat-icon">
+    ◈
+</div>
+
+                <div>
+                    <span>
+                        My Courses
+                    </span>
+
+                    <h2>
+                        0
+                    </h2>
+                </div>
+
+            </div>
+
+
+            <div class="student-stat-card">
+
+              <div class="student-stat-icon">
+    ◷
+</div>
+
+                <div>
+                    <span>
+                        In Progress
+                    </span>
+
+                    <h2>
+                        0
+                    </h2>
+                </div>
+
+            </div>
+
+
+            <div class="student-stat-card">
+
+                <div class="student-stat-icon">
+    ✓
+</div>
+
+                <div>
+                    <span>
+                        Completed
+                    </span>
+
+                    <h2>
+                        0
+                    </h2>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- MY COURSES -->
+
+        <section class="dashboard-courses-section">
+
+            <div class="dashboard-section-heading">
+
+                <div>
+
+                    <span>
+                        YOUR LEARNING
+                    </span>
+
+                    <h2>
+                        My Courses
+                    </h2>
+
+                    <p>
+                        Continue learning from where you left off.
+                    </p>
+
+                </div>
+
+                <a
+                    href="index.html#courses"
+                    class="explore-course-btn"
+                >
+                    Explore Courses →
+                </a>
+
+            </div>
+
+
+            <div class="dashboard-course-grid">
+
+                <div class="empty-course">
+
+                    <div class="empty-course-icon">
+                        ◈
+                    </div>
+
+                    <h3>
+                        No courses yet
+                    </h3>
+
+                    <p>
+                        You haven't enrolled in any course yet.
+                    </p>
+
+                    <a
+                        href="index.html#courses"
+                        class="empty-course-btn"
+                    >
+                        Explore Courses
+                    </a>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- QUICK ACTIONS -->
+
+        <section class="dashboard-actions">
+
+            <div class="dashboard-action-card">
+
+                <div class="dashboard-action-icon">
+                    🔎
+                </div>
+
+                <div>
+
+                    <h3>
+                        Explore New Courses
+                    </h3>
+
+                    <p>
+                        Discover courses and learn new skills.
+                    </p>
+
+                    <a href="index.html#courses">
+                        Browse Courses →
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <div class="dashboard-action-card">
+
+                <div class="dashboard-action-icon">
+                    ➜
+                </div>
+
+                <div>
+
+                    <h3>
+                        Keep Learning
+                    </h3>
+
+                    <p>
+                        Stay consistent and build your skills.
+                    </p>
+
+                    <a href="index.html#courses">
+                        Start Learning →
+                    </a>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- FOOTER -->
+
+    <footer class="dashboard-footer">
+
+        <span>
+            © 2026 CourseHub. All rights reserved.
+        </span>
+
+        <span>
+            Learn • Build • Grow
+        </span>
+
+    </footer>
+
+
+    <script src="dashboard.js"></script>
+
+</body>
+
+</html>

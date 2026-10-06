@@ -1,0 +1,752 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Admin Dashboard | CourseHub</title>
+
+    <link
+        rel="stylesheet"
+        href="admin.css"
+    >
+
+    <style>
+
+        /* =========================
+           EDIT COURSE MODAL
+        ========================== */
+
+        .modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 9999;
+            overflow-y: auto;
+            padding: 40px 20px;
+        }
+
+        .modal-content {
+            max-width: 600px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            position: relative;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+        }
+
+        .modal-content h2 {
+            margin-bottom: 20px;
+        }
+
+        .modal-content label {
+            display: block;
+            margin-top: 15px;
+            margin-bottom: 6px;
+            font-weight: 600;
+        }
+
+        .modal-content input,
+        .modal-content textarea {
+            width: 100%;
+            padding: 11px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-size: 15px;
+        }
+
+        .modal-content textarea {
+            resize: vertical;
+        }
+
+        .modal-content input:focus,
+        .modal-content textarea:focus {
+            outline: none;
+            border-color: #2563eb;
+        }
+
+        .close {
+            position: absolute;
+            right: 20px;
+            top: 15px;
+            font-size: 28px;
+            cursor: pointer;
+            color: #555;
+        }
+
+        .close:hover {
+            color: #000;
+        }
+
+        .edit-save-btn {
+            margin-top: 20px;
+            width: 100%;
+        }
+
+    </style>
+
+</head>
+
+
+<body class="admin-page">
+
+
+    <!-- =========================
+         ADMIN HEADER
+    ========================== -->
+
+    <header class="admin-topbar">
+
+        <div class="admin-brand">
+
+            <div class="admin-brand-icon">
+                ✓
+            </div>
+
+            <div>
+
+                <strong>
+                    CourseHub
+                </strong>
+
+                <span>
+                    Admin Panel
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <nav class="admin-nav">
+
+            <a href="index.html">
+                Website
+            </a>
+
+            <a href="dashboard.html">
+                Student Dashboard
+            </a>
+
+            <button
+                id="admin-logout-btn"
+                class="admin-logout"
+            >
+                Logout
+            </button>
+
+        </nav>
+
+    </header>
+
+
+
+    <!-- =========================
+         MAIN CONTENT
+    ========================== -->
+
+    <main class="admin-container">
+
+
+        <!-- =========================
+             WELCOME
+        ========================== -->
+
+        <section class="admin-welcome">
+
+            <div>
+
+                <p class="admin-welcome-small">
+                    ADMIN DASHBOARD
+                </p>
+
+                <h1>
+                    Welcome back, Admin 👋
+                </h1>
+
+                <p>
+                    Manage courses, payments and private
+                    Telegram access from one place.
+                </p>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =========================
+             STAT CARDS
+        ========================== -->
+
+        <section class="admin-stats">
+
+
+            <div class="admin-stat-card">
+
+                <div class="admin-stat-icon blue">
+                    📚
+                </div>
+
+                <div>
+
+                    <span>
+                        Total Courses
+                    </span>
+
+                    <h2 id="total-courses">
+                        0
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="admin-stat-card">
+
+                <div class="admin-stat-icon green">
+                    👥
+                </div>
+
+                <div>
+
+                    <span>
+                        Total Students
+                    </span>
+
+                    <h2 id="total-students">
+                        —
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="admin-stat-card">
+
+                <div class="admin-stat-icon orange">
+                    💰
+                </div>
+
+                <div>
+
+                    <span>
+                        Total Revenue
+                    </span>
+
+                    <h2 id="total-revenue">
+                        —
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- =========================
+             ADD COURSE
+    ========================== -->
+
+        <section class="admin-card">
+
+
+            <div class="admin-section-heading">
+
+                <div>
+
+                    <span>
+                        COURSE MANAGEMENT
+                    </span>
+
+                    <h2>
+                        Add New Course
+                    </h2>
+
+                    <p>
+                        Add a course with its private Telegram channel.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <form
+                id="course-form"
+                class="admin-course-form"
+            >
+
+
+                <!-- COURSE TITLE -->
+
+                <div class="admin-form-group">
+
+                    <label>
+                        Course Title
+                    </label>
+
+                    <input
+                        type="text"
+                        id="title"
+                        placeholder="e.g. Full Stack Web Development"
+                        required
+                    >
+
+                </div>
+
+
+
+                <!-- PRICE -->
+
+                <div class="admin-form-group">
+
+                    <label>
+                        Price
+                    </label>
+
+                    <input
+                        type="number"
+                        id="price"
+                        placeholder="e.g. 499"
+                        required
+                    >
+
+                </div>
+
+
+
+                <!-- DURATION -->
+
+                <div class="admin-form-group">
+
+                    <label>
+                        Duration
+                    </label>
+
+                    <input
+                        type="text"
+                        id="duration"
+                        placeholder="e.g. 30 Hours"
+                        required
+                    >
+
+                </div>
+
+
+
+                <!-- LEVEL -->
+
+                <div class="admin-form-group">
+
+                    <label>
+                        Level
+                    </label>
+
+                    <input
+                        type="text"
+                        id="level"
+                        placeholder="e.g. Beginner to Advanced"
+                        required
+                    >
+
+                </div>
+
+
+
+                <!-- COURSE CONTENT COUNT -->
+
+                <div class="admin-form-group">
+
+                    <label>
+                        Course Content Count
+                    </label>
+
+                    <input
+                        type="number"
+                        id="lessons"
+                        placeholder="e.g. 50"
+                        required
+                    >
+
+                </div>
+
+
+
+                <!-- CATEGORY -->
+
+                <div class="admin-form-group">
+
+                    <label>
+                        Category
+                    </label>
+
+                    <input
+                        type="text"
+                        id="category"
+                        placeholder="e.g. Programming"
+                        required
+                    >
+
+                </div>
+
+
+
+                <!-- COURSE IMAGE -->
+
+                <div class="admin-form-group full-width">
+
+                    <label>
+                        Course Image URL
+                    </label>
+
+                    <input
+                        type="text"
+                        id="image"
+                        placeholder="Paste course image URL"
+                        required
+                    >
+
+                </div>
+
+
+
+                <!-- TELEGRAM -->
+
+                <div class="admin-form-group full-width">
+
+                    <label>
+                        🔐 Private Telegram Channel Link
+                    </label>
+
+                    <input
+                        type="text"
+                        id="telegram_link"
+                        placeholder="https://t.me/+xxxxxxxx"
+                        required
+                    >
+
+                </div>
+
+
+
+                <!-- DESCRIPTION -->
+
+                <div class="admin-form-group full-width">
+
+                    <label>
+                        Course Description
+                    </label>
+
+                    <textarea
+                        id="description"
+                        placeholder="Write a short description about your course..."
+                        required
+                    ></textarea>
+
+                </div>
+
+
+
+                <!-- BUTTON -->
+
+                <div class="admin-form-actions">
+
+                    <button
+                        type="submit"
+                        class="admin-primary-btn"
+                    >
+                        + Add Course
+                    </button>
+
+                </div>
+
+
+            </form>
+
+        </section>
+
+
+
+        <!-- =========================
+             PAYMENT REQUESTS
+        ========================== -->
+
+        <section class="admin-card">
+
+
+            <div class="admin-section-heading">
+
+                <div>
+
+                    <span>
+                        PAYMENT MANAGEMENT
+                    </span>
+
+                    <h2>
+                        Payment Requests
+                    </h2>
+
+                    <p>
+                        Review customer payments and UTR details.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <div
+                id="payment-request-list"
+                class="payment-request-list"
+            >
+
+                <!-- Payment requests will load here -->
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- =========================
+             MANAGE COURSES
+        ========================== -->
+
+        <section class="admin-card manage-course-section">
+
+
+            <div class="admin-section-heading">
+
+                <div>
+
+                    <span>
+                        YOUR COURSES
+                    </span>
+
+                    <h2>
+                        Manage Courses
+                    </h2>
+
+                    <p>
+                        Edit, delete and manage your existing courses.
+                    </p>
+
+                </div>
+
+
+
+                <div class="admin-course-search">
+
+                    <input
+                        type="text"
+                        id="admin-course-search"
+                        placeholder="🔎 Search courses..."
+                    >
+
+                </div>
+
+            </div>
+
+
+
+            <div id="admin-course-list">
+
+                <!-- Courses will load here -->
+
+            </div>
+
+
+        </section>
+
+
+    </main>
+
+
+
+    <!-- =========================
+         EDIT COURSE MODAL
+    ========================== -->
+
+    <div
+        id="edit-course-modal"
+        class="modal"
+        style="display:none;"
+    >
+
+        <div class="modal-content">
+
+
+            <span
+                class="close"
+                onclick="closeEditModal()"
+            >
+                &times;
+            </span>
+
+
+            <h2>
+                ✏️ Edit Course
+            </h2>
+
+
+            <form id="edit-course-form">
+
+
+                <!-- COURSE ID -->
+
+                <input
+                    type="hidden"
+                    id="edit-course-id"
+                >
+
+
+                <!-- TITLE -->
+
+                <label>
+                    Course Title
+                </label>
+
+                <input
+                    type="text"
+                    id="edit-title"
+                    required
+                >
+
+
+                <!-- PRICE -->
+
+                <label>
+                    Price
+                </label>
+
+                <input
+                    type="number"
+                    id="edit-price"
+                    required
+                >
+
+
+                <!-- DURATION -->
+
+                <label>
+                    Duration
+                </label>
+
+                <input
+                    type="text"
+                    id="edit-duration"
+                    required
+                >
+
+
+                <!-- LEVEL -->
+
+                <label>
+                    Level
+                </label>
+
+                <input
+                    type="text"
+                    id="edit-level"
+                    required
+                >
+
+
+                <!-- CATEGORY -->
+
+                <label>
+                    Category
+                </label>
+
+                <input
+                    type="text"
+                    id="edit-category"
+                    required
+                >
+
+
+                <!-- IMAGE -->
+
+                <label>
+                    Course Image URL
+                </label>
+
+                <input
+                    type="text"
+                    id="edit-image"
+                >
+
+
+                <!-- TELEGRAM -->
+
+                <label>
+                    🔐 Private Telegram Link
+                </label>
+
+                <input
+                    type="text"
+                    id="edit-telegram"
+                >
+
+
+                <!-- DESCRIPTION -->
+
+                <label>
+                    Course Description
+                </label>
+
+                <textarea
+                    id="edit-description"
+                    rows="5"
+                ></textarea>
+
+
+                <!-- SAVE -->
+
+                <button
+                    type="submit"
+                    class="admin-primary-btn edit-save-btn"
+                >
+                    💾 Save Changes
+                </button>
+
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =========================
+         ADMIN JAVASCRIPT
+    ========================== -->
+
+    <script src="admin.js"></script>
+
+
+</body>
+
+</html>
+```

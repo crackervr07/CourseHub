@@ -1,0 +1,536 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Payment | CourseHub</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f7fb;
+            color: #111827;
+        }
+
+        .navbar {
+            height: 70px;
+            background: #ffffff;
+            display: flex;
+            align-items: center;
+            padding: 0 7%;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 800;
+            color: #2563eb;
+        }
+
+        .payment-container {
+            max-width: 900px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+
+        .payment-card {
+            background: #ffffff;
+            border-radius: 18px;
+            padding: 35px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            text-align: center;
+        }
+
+        .payment-card h1 {
+            font-size: 30px;
+            margin-bottom: 10px;
+        }
+
+        .payment-card > p {
+            color: #6b7280;
+            margin-bottom: 25px;
+        }
+
+        .courses-box {
+            background: #f3f6ff;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 25px;
+            text-align: left;
+        }
+
+        .courses-box h2 {
+            color: #2563eb;
+            margin-bottom: 15px;
+        }
+
+        .course-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            padding: 14px 0;
+            border-bottom: 1px solid #dbe3f5;
+        }
+
+        .course-item:last-child {
+            border-bottom: none;
+        }
+
+        .course-title {
+            font-weight: 700;
+        }
+
+        .course-price {
+            font-weight: 800;
+            white-space: nowrap;
+        }
+
+        .total-box {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 2px solid #2563eb;
+            display: flex;
+            justify-content: space-between;
+            font-size: 22px;
+            font-weight: 800;
+        }
+
+        .qr-box {
+            margin: 25px auto;
+        }
+
+        .qr-box img {
+            width: 230px;
+            height: 230px;
+            object-fit: contain;
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            padding: 10px;
+            background: white;
+        }
+
+        .upi-box {
+            margin: 20px auto;
+            max-width: 400px;
+            padding: 15px;
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 10px;
+        }
+
+        .upi-label {
+            font-size: 14px;
+            color: #6b7280;
+            margin-bottom: 5px;
+        }
+
+        .upi-id {
+            font-weight: bold;
+            color: #2563eb;
+            margin-bottom: 12px;
+        }
+
+        .copy-btn {
+            padding: 9px 16px;
+            border: none;
+            border-radius: 7px;
+            background: #111827;
+            color: white;
+            cursor: pointer;
+        }
+
+        .payment-btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 14px 25px;
+            border: none;
+            border-radius: 10px;
+            background: linear-gradient(
+                135deg,
+                #2563eb,
+                #4f46e5
+            );
+            color: white;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .payment-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .note {
+            margin-top: 20px;
+            font-size: 13px;
+            color: #6b7280;
+        }
+
+        @media (max-width: 600px) {
+
+            .payment-container {
+                margin: 25px auto;
+                padding: 15px;
+            }
+
+            .payment-card {
+                padding: 25px 18px;
+            }
+
+            .payment-card h1 {
+                font-size: 24px;
+            }
+
+            .qr-box img {
+                width: 200px;
+                height: 200px;
+            }
+
+            .course-item {
+                align-items: flex-start;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- NAVBAR -->
+
+    <nav class="navbar">
+
+        <div class="logo">
+            CourseHub
+        </div>
+
+    </nav>
+
+
+    <!-- PAYMENT -->
+
+    <main class="payment-container">
+
+        <div class="payment-card">
+
+            <h1>
+                Complete Your Payment 💳
+            </h1>
+
+            <p>
+                Pay once for all selected courses.
+            </p>
+
+
+            <!-- COURSES -->
+
+            <div class="courses-box">
+
+                <h2>
+                    Your Courses
+                </h2>
+
+                <div id="payment-courses"></div>
+
+
+                <div class="total-box">
+
+                    <span>
+                        Total
+                    </span>
+
+                    <span id="payment-total">
+                        ₹0
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- QR CODE -->
+
+            <div class="qr-box">
+
+                <img
+                    src="qr-code.png"
+                    alt="UPI Payment QR Code"
+                >
+
+            </div>
+
+
+            <!-- UPI -->
+
+            <div class="upi-box">
+
+                <div class="upi-label">
+                    UPI ID
+                </div>
+
+                <div
+                    class="upi-id"
+                    id="upi-id"
+                >
+                    yourupi@upi
+                </div>
+
+                <button
+                    class="copy-btn"
+                    onclick="copyUPI()"
+                >
+                    Copy UPI ID
+                </button>
+
+            </div>
+
+
+            <!-- PAYMENT COMPLETE -->
+
+            <a
+                href="#"
+                id="payment-complete-btn"
+                class="payment-btn"
+            >
+                I Have Completed Payment →
+            </a>
+
+
+            <div class="note">
+
+                After payment, you will submit one UTR
+                for this order.
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <script>
+
+        // =========================================
+        // GET CHECKOUT CART
+        // =========================================
+
+        function getCheckoutCart() {
+
+            try {
+
+                return JSON.parse(
+                    localStorage.getItem("checkoutCart")
+                ) || [];
+
+            } catch (error) {
+
+                console.log(
+                    "Checkout cart error:",
+                    error
+                );
+
+                return [];
+
+            }
+
+        }
+
+
+        // =========================================
+        // LOAD COURSES
+        // =========================================
+
+        function loadPaymentCourses() {
+
+            const cart =
+                getCheckoutCart();
+
+
+            if (!cart.length) {
+
+                alert(
+                    "No courses found."
+                );
+
+                window.location.href =
+                    "cart.html";
+
+                return;
+
+            }
+
+
+            const container =
+                document.getElementById(
+                    "payment-courses"
+                );
+
+
+            const totalElement =
+                document.getElementById(
+                    "payment-total"
+                );
+
+
+            let total = 0;
+
+
+            container.innerHTML = "";
+
+
+            cart.forEach(course => {
+
+                const price =
+                    Number(course.price) || 0;
+
+
+                total += price;
+
+
+                const item =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                item.className =
+                    "course-item";
+
+
+                item.innerHTML = `
+
+                    <span class="course-title">
+                        ${course.title || "Course"}
+                    </span>
+
+                    <span class="course-price">
+                        ₹${price}
+                    </span>
+
+                `;
+
+
+                container.appendChild(item);
+
+            });
+
+
+            totalElement.textContent =
+                `₹${total}`;
+
+
+            document.title =
+                `Payment ₹${total} | CourseHub`;
+
+        }
+
+
+        // =========================================
+        // PAYMENT BUTTON
+        // =========================================
+
+        const paymentCompleteBtn =
+            document.getElementById(
+                "payment-complete-btn"
+            );
+
+
+        if (paymentCompleteBtn) {
+
+            paymentCompleteBtn.addEventListener(
+                "click",
+                function(event) {
+
+                    event.preventDefault();
+
+
+                    const cart =
+                        getCheckoutCart();
+
+
+                    if (!cart.length) {
+
+                        alert(
+                            "No courses found."
+                        );
+
+                        return;
+
+                    }
+
+
+                    window.location.href =
+                        "payment-success.html";
+
+                }
+            );
+
+        }
+
+
+        // =========================================
+        // COPY UPI
+        // =========================================
+
+        function copyUPI() {
+
+            const upi =
+                document
+                    .getElementById("upi-id")
+                    .textContent
+                    .trim();
+
+
+            navigator.clipboard
+                .writeText(upi)
+                .then(() => {
+
+                    alert(
+                        "UPI ID copied!"
+                    );
+
+                })
+                .catch(() => {
+
+                    alert(
+                        "UPI ID: " + upi
+                    );
+
+                });
+
+        }
+
+
+        // =========================================
+        // START
+        // =========================================
+
+        loadPaymentCourses();
+
+    </script>
+
+
+</body>
+
+</html>

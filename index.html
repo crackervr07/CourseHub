@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>CourseHub | Learn Skills. Build Your Future.</title>
+
+    <link rel="stylesheet" href="home.css">
+</head>
+
+<body>
+
+    <!-- =========================
+         NAVBAR
+    ========================== -->
+
+    <header class="navbar">
+
+        <a href="index.html" class="logo">
+            Course<span>Hub</span>
+        </a>
+
+        <nav class="nav-links">
+
+            <a href="index.html">Home</a>
+            <a href="#courses">Courses</a>
+            <a href="#categories">Categories</a>
+            <a href="#why-us">Why Us</a>
+            <a href="#contact">Contact</a>
+
+            <a href="login.html" class="login-btn">
+                Login
+            </a>
+
+        </nav>
+
+    </header>
+
+
+    <!-- =========================
+         HERO
+    ========================== -->
+
+    <main>
+
+        <section class="hero">
+
+            <div class="hero-content">
+
+                <div class="hero-badge">
+                    🚀 Learn. Build. Grow.
+                </div>
+
+                <h1>
+                    Learn Skills That
+                    <span>Build Your Future</span>
+                </h1>
+
+                <p>
+                    Learn practical, career-focused skills through
+                    carefully designed online courses and take your
+                    next step with confidence.
+                </p>
+
+                <div class="hero-actions">
+
+                    <a href="#courses" class="primary-btn">
+                        Explore Courses
+                        <span>→</span>
+                    </a>
+
+                    <a href="#categories" class="secondary-btn">
+                        Browse Categories
+                    </a>
+
+                </div>
+
+                <div class="hero-points">
+
+                    <span>✓ Beginner Friendly</span>
+                    <span>✓ Practical Learning</span>
+                    <span>✓ Learn at Your Pace</span>
+
+                </div>
+
+            </div>
+
+
+            <div class="hero-visual">
+
+                <div class="hero-glow"></div>
+
+                <div class="learning-card">
+
+                    <div class="learning-icon">
+                        🎓
+                    </div>
+
+                    <span class="learning-label">
+                        COURSEHUB
+                    </span>
+
+                    <h3>
+                        Start Learning Today
+                    </h3>
+
+                    <p>
+                        Build useful skills with practical,
+                        easy-to-follow courses.
+                    </p>
+
+                    <div class="learning-stats">
+
+                        <div>
+                            <strong>100+</strong>
+                            <small>Lessons</small>
+                        </div>
+
+                        <div>
+                            <strong>10+</strong>
+                            <small>Skills</small>
+                        </div>
+
+                        <div>
+                            <strong>24/7</strong>
+                            <small>Learning</small>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="floating-card floating-top">
+                    📈 Trading
+                </div>
+
+                <div class="floating-card floating-bottom">
+                    💻 Programming
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             SEARCH
+        ========================== -->
+
+        <section class="search-section">
+
+            <div class="search-wrapper">
+
+                <div class="search-heading">
+
+                    <span>FIND YOUR COURSE</span>
+
+                    <h2>
+                        What do you want to learn?
+                    </h2>
+
+                    <p>
+                        Search from our available courses and start learning.
+                    </p>
+
+                </div>
+
+                <div class="search-box">
+
+                    <span class="search-icon">
+                        🔍
+                    </span>
+
+                    <input
+                        type="text"
+                        id="course-search"
+                        placeholder="Search courses, skills or categories..."
+                        autocomplete="off"
+                    >
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             SEARCH RESULTS
+        ========================== -->
+
+        <section
+            class="search-results-section"
+            id="search-results-section"
+        >
+
+            <div class="section-heading">
+
+                <span>SEARCH RESULTS</span>
+
+                <h2>Courses For You</h2>
+
+            </div>
+
+            <div
+                class="search-course-container"
+                id="search-course-list"
+            ></div>
+
+        </section>
+
+
+        <!-- =========================
+             CATEGORIES
+        ========================== -->
+
+        <section
+            class="section categories-section"
+            id="categories"
+        >
+
+            <div class="section-heading">
+
+                <span>EXPLORE</span>
+
+                <h2>Learn by Category</h2>
+
+                <p>
+                    Choose a category and discover courses
+                    that match your interests.
+                </p>
+
+            </div>
+
+
+            <div class="category-grid">
+
+                <button
+                    class="category-card"
+                    data-category="Trading"
+                    type="button"
+                >
+                    <div class="category-icon">📈</div>
+                    <h3>Trading</h3>
+                    <p>Trading concepts & strategies</p>
+                </button>
+
+
+                <button
+                    class="category-card"
+                    data-category="Stock Market"
+                    type="button"
+                >
+                    <div class="category-icon">📊</div>
+                    <h3>Stock Market</h3>
+                    <p>Stocks & investing basics</p>
+                </button>
+
+
+                <button
+                    class="category-card"
+                    data-category="Share Market"
+                    type="button"
+                >
+                    <div class="category-icon">💰</div>
+                    <h3>Share Market</h3>
+                    <p>Shares & market fundamentals</p>
+                </button>
+
+
+                <button
+                    class="category-card"
+                    data-category="Programming"
+                    type="button"
+                >
+                    <div class="category-icon">💻</div>
+                    <h3>Programming</h3>
+                    <p>Python, JavaScript & more</p>
+                </button>
+
+
+                <button
+                    class="category-card"
+                    data-category="Web Development"
+                    type="button"
+                >
+                    <div class="category-icon">🌐</div>
+                    <h3>Web Development</h3>
+                    <p>HTML, CSS, JavaScript & more</p>
+                </button>
+
+
+                <button
+                    class="category-card"
+                    data-category="Data Science"
+                    type="button"
+                >
+                    <div class="category-icon">🤖</div>
+                    <h3>AI & Data Science</h3>
+                    <p>Data, AI & ML fundamentals</p>
+                </button>
+
+
+                <button
+                    class="category-card"
+                    data-category="Digital Marketing"
+                    type="button"
+                >
+                    <div class="category-icon">📱</div>
+                    <h3>Digital Marketing</h3>
+                    <p>SEO, marketing & social media</p>
+                </button>
+
+
+                <button
+                    class="category-card"
+                    data-category="Skills"
+                    type="button"
+                >
+                    <div class="category-icon">🎯</div>
+                    <h3>Career Skills</h3>
+                    <p>Professional & career skills</p>
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             COURSES
+        ========================== -->
+
+        <section
+            class="courses-section"
+            id="courses"
+        >
+
+            <div class="section-heading">
+
+                <span>OUR COURSES</span>
+
+                <h2>Popular Courses</h2>
+
+                <p>
+                    Learn practical skills designed for your growth.
+                </p>
+
+            </div>
+
+
+            <div
+                class="course-container"
+                id="course-list"
+            ></div>
+
+        </section>
+
+
+        <!-- =========================
+             WHY US
+        ========================== -->
+
+        <section
+            class="section why-section"
+            id="why-us"
+        >
+
+            <div class="section-heading">
+
+                <span>WHY COURSEHUB</span>
+
+                <h2>Learning Made Simple</h2>
+
+                <p>
+                    Everything you need to build useful skills in one place.
+                </p>
+
+            </div>
+
+
+            <div class="why-grid">
+
+                <div class="why-card">
+
+                    <div class="why-icon">🎓</div>
+
+                    <h3>Practical Courses</h3>
+
+                    <p>
+                        Learn through simple and practical
+                        lessons focused on real skills.
+                    </p>
+
+                </div>
+
+
+                <div class="why-card">
+
+                    <div class="why-icon">⚡</div>
+
+                    <h3>Learn at Your Pace</h3>
+
+                    <p>
+                        Learn whenever you want and continue
+                        at your own speed.
+                    </p>
+
+                </div>
+
+
+                <div class="why-card">
+
+                    <div class="why-icon">📱</div>
+
+                    <h3>Student Community</h3>
+
+                    <p>
+                        Stay connected and get support while
+                        learning your course.
+                    </p>
+
+                </div>
+
+
+                <div class="why-card">
+
+                    <div class="why-icon">🚀</div>
+
+                    <h3>Career Focused</h3>
+
+                    <p>
+                        Build skills that can support your
+                        academic and professional growth.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             CTA
+        ========================== -->
+
+        <section class="cta-section">
+
+            <div>
+
+                <span>START YOUR JOURNEY</span>
+
+                <h2>
+                    Ready to Start Learning?
+                </h2>
+
+                <p>
+                    Explore our courses and start building
+                    valuable skills today.
+                </p>
+
+            </div>
+
+            <a href="#courses" class="cta-btn">
+                Explore Courses →
+            </a>
+
+        </section>
+
+    </main>
+
+
+    <!-- =========================
+         FOOTER
+    ========================== -->
+
+    <footer
+        class="footer"
+        id="contact"
+    >
+
+        <div class="footer-grid">
+
+            <div class="footer-brand">
+
+                <a href="index.html" class="logo footer-logo">
+                    Course<span>Hub</span>
+                </a>
+
+                <p>
+                    Learn practical skills.
+                    Build your future.
+                </p>
+
+            </div>
+
+
+            <div class="footer-column">
+
+                <h4>Platform</h4>
+
+                <a href="index.html">Home</a>
+                <a href="#courses">Courses</a>
+                <a href="#categories">Categories</a>
+                <a href="#why-us">Why Us</a>
+
+            </div>
+
+
+            <div class="footer-column">
+
+                <h4>Categories</h4>
+
+                <a href="#categories">Trading</a>
+                <a href="#categories">Programming</a>
+                <a href="#categories">Web Development</a>
+                <a href="#categories">Data Science</a>
+
+            </div>
+
+
+            <div class="footer-column">
+
+                <h4>Account</h4>
+
+                <a href="login.html">Login</a>
+                <a href="signup.html">Create Account</a>
+                <a href="dashboard.html">Dashboard</a>
+
+            </div>
+
+
+            <div class="footer-column">
+
+                <h4>Contact</h4>
+
+                <p>Have questions?</p>
+                <p>We're here to help.</p>
+
+            </div>
+
+        </div>
+
+
+        <div class="footer-bottom">
+
+            <span>
+                © 2026 CourseHub. All rights reserved.
+            </span>
+
+            <span>
+                Learn • Build • Grow
+            </span>
+
+        </div>
+
+    </footer>
+
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>

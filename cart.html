@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Your Cart | CourseHub</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="cart-page">
+
+    <!-- NAVBAR -->
+    <header class="cart-navbar">
+
+        <a href="index.html" class="cart-logo">
+            Course<span>Hub</span>
+        </a>
+
+        <div class="cart-nav-right">
+            🛒 Your Cart
+        </div>
+
+    </header>
+
+
+    <!-- MAIN -->
+    <main class="cart-container">
+
+        <div class="cart-page-header">
+
+            <div>
+                <span class="cart-eyebrow">SHOPPING BAG</span>
+
+                <h1>Your Cart</h1>
+
+                <p>
+                    Review your courses and complete your purchase.
+                </p>
+            </div>
+
+            <a href="index.html#courses" class="cart-continue-top">
+                ← Continue Shopping
+            </a>
+
+        </div>
+
+
+        <!-- CART LAYOUT -->
+        <div class="cart-layout">
+
+            <!-- LEFT -->
+            <section class="cart-main-card">
+
+                <div class="cart-card-header">
+
+                    <div>
+                        <h2>Selected Courses</h2>
+
+                        <p id="cart-items-label">
+                            Your selected courses
+                        </p>
+                    </div>
+
+                    <div class="cart-bag-icon">
+                        🛒
+                    </div>
+
+                </div>
+
+
+                <!-- COURSES WILL APPEAR HERE -->
+                <div id="cart-items"></div>
+
+
+                <!-- EMPTY CART -->
+                <div id="empty-cart" class="empty-cart">
+
+                    <div class="empty-cart-icon">
+                        🛒
+                    </div>
+
+                    <h2>Your cart is empty</h2>
+
+                    <p>
+                        Explore our courses and start learning today.
+                    </p>
+
+                    <a
+                        href="index.html#courses"
+                        class="empty-cart-btn"
+                    >
+                        Browse Courses
+                    </a>
+
+                </div>
+
+
+                <!-- TRUST -->
+                <div class="cart-trust">
+
+                    <div class="trust-item">
+                        <span>🔒</span>
+
+                        <div>
+                            <strong>Secure Payment</strong>
+                            <small>
+                                Your payment details are protected
+                            </small>
+                        </div>
+                    </div>
+
+
+                    <div class="trust-item">
+                        <span>⚡</span>
+
+                        <div>
+                            <strong>Quick Access</strong>
+                            <small>
+                                Get your course after verification
+                            </small>
+                        </div>
+                    </div>
+
+
+                    <div class="trust-item">
+                        <span>🎓</span>
+
+                        <div>
+                            <strong>Learn Anytime</strong>
+                            <small>
+                                Access your purchased courses
+                            </small>
+                        </div>
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- RIGHT SUMMARY -->
+            <aside class="cart-summary-card">
+
+                <div class="summary-top">
+
+                    <span>ORDER SUMMARY</span>
+
+                    <span class="summary-secure">
+                        🔒 Secure
+                    </span>
+
+                </div>
+
+
+                <h2>Checkout</h2>
+
+
+                <div class="summary-line">
+
+                    <span>Courses</span>
+
+                    <strong id="cart-count">
+                        0
+                    </strong>
+
+                </div>
+
+
+                <div class="summary-line">
+
+                    <span>Subtotal</span>
+
+                    <strong id="cart-subtotal">
+                        ₹0
+                    </strong>
+
+                </div>
+
+
+                <div class="summary-line">
+
+                    <span>Platform Fee</span>
+
+                    <strong class="free-text">
+                        FREE
+                    </strong>
+
+                </div>
+
+
+                <div class="summary-divider"></div>
+
+
+                <div class="summary-total">
+
+                    <div>
+
+                        <span>Total Amount</span>
+
+                        <small>
+                            Inclusive of all charges
+                        </small>
+
+                    </div>
+
+                    <strong id="cart-total">
+                        ₹0
+                    </strong>
+
+                </div>
+
+
+                <button
+                    id="checkout-btn"
+                    class="premium-checkout-btn"
+                >
+                    Proceed to Checkout
+                    <span>→</span>
+                </button>
+
+
+                <div class="payment-methods">
+
+                    <span>We accept</span>
+
+                    <div class="payment-icons">
+
+                        <span>UPI</span>
+                        <span>GPay</span>
+                        <span>₹</span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="secure-message">
+
+                    <span>🛡️</span>
+
+                    <div>
+
+                        <strong>
+                            Safe & Secure Checkout
+                        </strong>
+
+                        <p>
+                            Your order is processed securely.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </aside>
+
+        </div>
+
+    </main>
+
+
+    <!-- CART JS -->
+    <script src="./cart.js?v=3"></script>
+
+</body>
+</html>

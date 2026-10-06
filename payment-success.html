@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Payment Verification | CourseHub</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f7fb;
+            color: #111827;
+        }
+
+        .navbar {
+            height: 70px;
+            background: white;
+            display: flex;
+            align-items: center;
+            padding: 0 7%;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 800;
+            color: #2563eb;
+        }
+
+        .container {
+            max-width: 650px;
+            margin: 60px auto;
+            padding: 20px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 18px;
+            padding: 35px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+        }
+
+        .success-icon {
+            width: 70px;
+            height: 70px;
+            margin: 0 auto 20px;
+            border-radius: 50%;
+            background: #dcfce7;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 35px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #6b7280;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .courses-box {
+            background: #f3f6ff;
+            padding: 18px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+        }
+
+        .courses-box h2 {
+            color: #2563eb;
+            font-size: 20px;
+            margin-bottom: 15px;
+        }
+
+        .course-item {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            padding: 12px 0;
+            border-bottom: 1px solid #dbe3f5;
+        }
+
+        .course-item:last-child {
+            border-bottom: none;
+        }
+
+        .course-title {
+            font-weight: 700;
+        }
+
+        .course-price {
+            font-weight: 800;
+            white-space: nowrap;
+        }
+
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 2px solid #2563eb;
+            font-size: 20px;
+            font-weight: 800;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        input {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #d1d5db;
+            border-radius: 9px;
+            font-size: 15px;
+            outline: none;
+        }
+
+        input:focus {
+            border-color: #2563eb;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 10px;
+            background: linear-gradient(
+                135deg,
+                #2563eb,
+                #4f46e5
+            );
+            color: white;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .note {
+            margin-top: 20px;
+            text-align: center;
+            color: #6b7280;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        @media (max-width: 600px) {
+
+            .container {
+                margin: 25px auto;
+                padding: 15px;
+            }
+
+            .card {
+                padding: 25px 18px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <nav class="navbar">
+
+        <div class="logo">
+            CourseHub
+        </div>
+
+    </nav>
+
+    <main class="container">
+
+        <div class="card">
+
+            <div class="success-icon">
+                ✓
+            </div>
+
+            <h1>
+                Payment Completed?
+            </h1>
+
+            <p class="subtitle">
+                Submit your UTR / Transaction ID.
+                Your payment will be verified before
+                course access is provided.
+            </p>
+
+            <div class="courses-box">
+
+                <h2>
+                    Purchased Courses
+                </h2>
+
+                <div id="course-list"></div>
+
+                <div class="total-row">
+
+                    <span>
+                        Total Paid
+                    </span>
+
+                    <span id="total-price">
+                        ₹0
+                    </span>
+
+                </div>
+
+            </div>
+
+            <form id="payment-form">
+
+                <div class="form-group">
+
+                    <label for="utr">
+                        UTR / Transaction ID
+                    </label>
+
+                    <input
+                        type="text"
+                        id="utr"
+                        placeholder="Enter UTR / Transaction ID"
+                        required
+                    >
+
+                </div>
+
+                <button
+                    type="submit"
+                    class="submit-btn"
+                    id="submit-btn"
+                >
+                    Submit Payment Details
+                </button>
+
+            </form>
+
+            <p class="note">
+                One UTR will be used for all courses
+                in this order. Your courses will be
+                unlocked after payment verification.
+            </p>
+
+        </div>
+
+    </main>
+
+    <script>
+
+        // =========================================
+        // GET CHECKOUT CART
+        // =========================================
+
+        function getCheckoutCart() {
+
+            try {
+
+                const savedCart =
+                    localStorage.getItem("checkoutCart");
+
+                if (!savedCart) {
+                    return [];
+                }
+
+                const cart =
+                    JSON.parse(savedCart);
+
+                if (!Array.isArray(cart)) {
+                    return [];
+                }
+
+                return cart;
+
+            } catch (error) {
+
+                console.error(
+                    "Checkout cart error:",
+                    error
+                );
+
+                return [];
+
+            }
+
+        }
+
+
+        // =========================================
+        // DISPLAY COURSES + TOTAL
+        // =========================================
+
+        function displayCourses() {
+
+            const cart =
+                getCheckoutCart();
+
+            const courseList =
+                document.getElementById(
+                    "course-list"
+                );
+
+            const totalPrice =
+                document.getElementById(
+                    "total-price"
+                );
+
+
+            if (!cart.length) {
+
+                courseList.innerHTML = `
+                    <p style="
+                        padding:10px 0;
+                        color:#6b7280;
+                    ">
+                        No courses found.
+                    </p>
+                `;
+
+                totalPrice.textContent =
+                    "₹0";
+
+                return;
+
+            }
+
+
+            let total = 0;
+
+            courseList.innerHTML = "";
+
+
+            cart.forEach(function(course) {
+
+                const price =
+                    Number(course.price) || 0;
+
+                total += price;
+
+
+                const item =
+                    document.createElement("div");
+
+                item.className =
+                    "course-item";
+
+
+                item.innerHTML = `
+
+                    <span class="course-title">
+                        ${course.title || "Course"}
+                    </span>
+
+                    <span class="course-price">
+                        ₹${price}
+                    </span>
+
+                `;
+
+
+                courseList.appendChild(item);
+
+            });
+
+
+            totalPrice.textContent =
+                "₹" + total;
+
+
+            console.log(
+                "Payment Success Cart:",
+                cart
+            );
+
+            console.log(
+                "Payment Total:",
+                total
+            );
+
+        }
+
+
+        // =========================================
+        // PAYMENT FORM
+        // =========================================
+
+        const paymentForm =
+            document.getElementById(
+                "payment-form"
+            );
+
+
+        paymentForm.addEventListener(
+            "submit",
+            async function(event) {
+
+                event.preventDefault();
+
+
+                const utr =
+                    document
+                        .getElementById("utr")
+                        .value
+                        .trim();
+
+
+                if (!utr) {
+
+                    alert(
+                        "Please enter UTR / Transaction ID."
+                    );
+
+                    return;
+
+                }
+
+
+                // =================================
+                // USER LOGIN CHECK
+                // =================================
+
+                const userData =
+                    localStorage.getItem("user");
+
+
+                if (!userData) {
+
+                    alert(
+                        "Please login before submitting payment."
+                    );
+
+                    window.location.href =
+                        "loging.html";
+
+                    return;
+
+                }
+
+
+                let user;
+
+                try {
+
+                    user =
+                        JSON.parse(userData);
+
+                } catch (error) {
+
+                    alert(
+                        "User login data is invalid. Please login again."
+                    );
+
+                    return;
+
+                }
+
+
+                // =================================
+                // GET CART
+                // =================================
+
+                const cart =
+                    getCheckoutCart();
+
+
+                if (!cart.length) {
+
+                    alert(
+                        "No courses found."
+                    );
+
+                    return;
+
+                }
+
+
+                // =================================
+                // COURSE IDS
+                // =================================
+
+                const courseIds =
+                    cart.map(function(course) {
+
+                        return Number(course.id);
+
+                    });
+
+
+                // =================================
+                // TOTAL AMOUNT
+                // =================================
+
+                const totalAmount =
+                    cart.reduce(
+                        function(total, course) {
+
+                            return total +
+                                (Number(course.price) || 0);
+
+                        },
+                        0
+                    );
+
+
+                console.log(
+                    "PAYMENT DATA:",
+                    {
+                        userId: user.userId,
+                        courseIds: courseIds,
+                        utr: utr,
+                        amount: totalAmount
+                    }
+                );
+
+
+                // =================================
+                // SUBMIT BUTTON
+                // =================================
+
+                const submitButton =
+                    document.getElementById(
+                        "submit-btn"
+                    );
+
+
+                submitButton.disabled = true;
+
+                submitButton.textContent =
+                    "Submitting...";
+
+
+                // =================================
+                // SEND PAYMENT
+                // =================================
+
+                try {
+
+                    const response =
+                        await fetch(
+                            "http://localhost:3000/api/payments",
+                            {
+                                method: "POST",
+
+                                headers: {
+                                    "Content-Type":
+                                        "application/json"
+                                },
+
+                                body:
+                                    JSON.stringify({
+
+                                        userId:
+                                            user.userId,
+
+                                        courseIds:
+                                            courseIds,
+
+                                        utr:
+                                            utr,
+
+                                        amount:
+                                            totalAmount
+
+                                    })
+
+                            }
+                        );
+
+
+                    const data =
+                        await response.json();
+
+
+                    console.log(
+                        "Payment response:",
+                        data
+                    );
+
+
+                    if (!response.ok) {
+
+                        throw new Error(
+                            data.message ||
+                            "Payment submission failed"
+                        );
+
+                    }
+
+
+                    alert(
+                        "Payment details submitted successfully! Verification is pending."
+                    );
+
+
+                    window.location.href =
+                        "dashboard.html";
+
+
+                } catch (error) {
+
+                    console.error(
+                        "Payment error:",
+                        error
+                    );
+
+
+                    alert(
+                        error.message
+                    );
+
+
+                    submitButton.disabled =
+                        false;
+
+
+                    submitButton.textContent =
+                        "Submit Payment Details";
+
+                }
+
+            }
+        );
+
+
+        // =========================================
+        // START
+        // =========================================
+
+        displayCourses();
+
+    </script>
+
+</body>
+
+</html>

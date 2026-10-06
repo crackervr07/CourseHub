@@ -1,0 +1,691 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f5f7fb;
+    color: #111827;
+}
+
+
+/* =========================
+   NAVBAR
+========================= */
+
+.dashboard-navbar {
+    width: 100%;
+    min-height: 72px;
+    padding: 0 7%;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    background: #ffffff;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.dashboard-logo {
+    color: #111827;
+    text-decoration: none;
+
+    font-size: 25px;
+    font-weight: 800;
+}
+
+.dashboard-logo span {
+    color: #2563eb;
+}
+
+.dashboard-nav {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+.dashboard-nav a {
+    color: #4b5563;
+    text-decoration: none;
+
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.dashboard-nav a:hover {
+    color: #2563eb;
+}
+
+.dashboard-logout {
+    padding: 9px 16px;
+
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+
+    background: #ffffff;
+    color: #374151;
+
+    font-size: 13px;
+    font-weight: 700;
+
+    cursor: pointer;
+}
+
+.dashboard-logout:hover {
+    background: #fef2f2;
+    color: #dc2626;
+    border-color: #fecaca;
+}
+
+
+/* =========================
+   MAIN
+========================= */
+
+.dashboard-main {
+    width: 100%;
+    max-width: 1200px;
+
+    margin: 0 auto;
+
+    padding: 55px 25px 80px;
+}
+
+
+/* =========================
+   WELCOME
+========================= */
+
+.dashboard-welcome {
+    width: 100%;
+
+    padding: 35px 40px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 25px;
+
+    background: linear-gradient(
+        135deg,
+        #eff6ff,
+        #eef2ff
+    );
+
+    border: 1px solid #dbeafe;
+    border-radius: 20px;
+}
+
+.dashboard-label {
+    color: #2563eb;
+
+    font-size: 10px;
+    font-weight: 800;
+
+    letter-spacing: 1.5px;
+}
+
+.dashboard-welcome h1 {
+    margin-top: 8px;
+
+    color: #111827;
+
+    font-size: 30px;
+    font-weight: 800;
+}
+
+.dashboard-welcome p {
+    margin-top: 7px;
+
+    color: #6b7280;
+
+    font-size: 14px;
+}
+
+.dashboard-welcome-icon {
+    width: 80px;
+    height: 80px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #ffffff;
+
+    border: 1px solid #dbeafe;
+    border-radius: 20px;
+
+    font-size: 38px;
+
+    box-shadow:
+        0 10px 25px rgba(37, 99, 235, 0.10);
+}
+
+
+/* =========================
+   STATS
+========================= */
+
+.student-stats {
+    width: 100%;
+
+    margin-top: 22px;
+
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 18px;
+}
+
+.student-stat-card {
+    min-width: 0;
+
+    padding: 22px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 15px;
+
+    background: #ffffff;
+
+    border: 1px solid #e5e7eb;
+    border-radius: 15px;
+
+    box-shadow:
+        0 5px 18px rgba(0, 0, 0, 0.03);
+}
+
+.student-stat-icon {
+    width: 48px;
+    height: 48px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #eff6ff;
+
+    border-radius: 12px;
+
+    font-size: 22px;
+}
+
+.student-stat-card span {
+    color: #6b7280;
+
+    font-size: 12px;
+}
+
+.student-stat-card h2 {
+    margin-top: 4px;
+
+    color: #111827;
+
+    font-size: 25px;
+}
+
+
+/* =========================
+   MY COURSES
+========================= */
+
+.dashboard-courses-section {
+    width: 100%;
+
+    margin-top: 55px;
+}
+
+.dashboard-section-heading {
+    width: 100%;
+
+    margin-bottom: 25px;
+
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+
+    gap: 25px;
+}
+
+.dashboard-section-heading > div > span {
+    color: #2563eb;
+
+    font-size: 10px;
+    font-weight: 800;
+
+    letter-spacing: 1.5px;
+}
+
+.dashboard-section-heading h2 {
+    margin-top: 6px;
+
+    color: #111827;
+
+    font-size: 28px;
+}
+
+.dashboard-section-heading p {
+    margin-top: 5px;
+
+    color: #6b7280;
+
+    font-size: 13px;
+}
+
+.explore-course-btn {
+    flex-shrink: 0;
+
+    padding: 11px 16px;
+
+    background: #2563eb;
+
+    color: #ffffff;
+
+    text-decoration: none;
+
+    border-radius: 8px;
+
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.explore-course-btn:hover {
+    background: #1d4ed8;
+}
+
+
+/* =========================
+   COURSE GRID
+========================= */
+
+.dashboard-course-grid {
+    width: 100%;
+
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 20px;
+}
+
+
+/* =========================
+   EMPTY COURSE
+========================= */
+
+.empty-course {
+    width: 100%;
+
+    grid-column: 1 / -1;
+
+    padding: 55px 20px;
+
+    text-align: center;
+
+    background: #ffffff;
+
+    border: 1px dashed #d1d5db;
+
+    border-radius: 16px;
+}
+
+.empty-course-icon {
+    width: 65px;
+    height: 65px;
+
+    margin: 0 auto;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #eff6ff;
+
+    border-radius: 16px;
+
+    font-size: 30px;
+}
+
+.empty-course h3 {
+    margin-top: 15px;
+
+    color: #111827;
+
+    font-size: 18px;
+}
+
+.empty-course p {
+    margin-top: 6px;
+
+    color: #6b7280;
+
+    font-size: 13px;
+}
+
+.empty-course-btn {
+    display: inline-block;
+
+    margin-top: 18px;
+
+    padding: 11px 17px;
+
+    background: #2563eb;
+
+    color: #ffffff;
+
+    text-decoration: none;
+
+    border-radius: 8px;
+
+    font-size: 12px;
+    font-weight: 700;
+}
+
+
+/* =========================
+   ENROLLED COURSE
+========================= */
+
+.dashboard-course-card {
+    min-width: 0;
+
+    overflow: hidden;
+
+    background: #ffffff;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 15px;
+
+    box-shadow:
+        0 5px 18px rgba(0, 0, 0, 0.04);
+}
+
+.dashboard-course-image {
+    width: 100%;
+    height: 130px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: linear-gradient(
+        135deg,
+        #eff6ff,
+        #eef2ff
+    );
+
+    font-size: 40px;
+}
+
+.dashboard-course-content {
+    padding: 18px;
+}
+
+.dashboard-course-content h3 {
+    color: #111827;
+
+    font-size: 16px;
+}
+
+.dashboard-course-content p {
+    margin-top: 6px;
+
+    color: #6b7280;
+
+    font-size: 12px;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 7px;
+
+    margin-top: 16px;
+
+    overflow: hidden;
+
+    background: #e5e7eb;
+
+    border-radius: 10px;
+}
+
+.progress-fill {
+    height: 100%;
+
+    background: #2563eb;
+
+    border-radius: 10px;
+}
+
+.dashboard-course-content small {
+    display: block;
+
+    margin-top: 7px;
+
+    color: #6b7280;
+
+    font-size: 11px;
+}
+
+
+/* =========================
+   QUICK ACTIONS
+========================= */
+
+.dashboard-actions {
+    width: 100%;
+
+    margin-top: 45px;
+
+    display: grid;
+
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: 18px;
+}
+
+.dashboard-action-card {
+    min-width: 0;
+
+    padding: 23px;
+
+    display: flex;
+
+    gap: 16px;
+
+    background: #ffffff;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 15px;
+}
+
+.dashboard-action-icon {
+    width: 48px;
+    height: 48px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #eff6ff;
+
+    border-radius: 12px;
+
+    font-size: 22px;
+}
+
+.dashboard-action-card h3 {
+    color: #111827;
+
+    font-size: 16px;
+}
+
+.dashboard-action-card p {
+    margin-top: 5px;
+
+    color: #6b7280;
+
+    font-size: 12px;
+}
+
+.dashboard-action-card a {
+    display: inline-block;
+
+    margin-top: 10px;
+
+    color: #2563eb;
+
+    text-decoration: none;
+
+    font-size: 12px;
+
+    font-weight: 700;
+}
+
+
+/* =========================
+   FOOTER
+========================= */
+
+.dashboard-footer {
+    width: 100%;
+
+    padding: 20px 7%;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    background: #111827;
+
+    color: #9ca3af;
+
+    font-size: 11px;
+}
+
+
+/* =========================
+   TABLET
+========================= */
+
+@media (max-width: 850px) {
+
+    .student-stats {
+        grid-template-columns: 1fr;
+    }
+
+    .dashboard-course-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 650px) {
+
+    .dashboard-navbar {
+        padding: 15px 20px;
+
+        flex-direction: column;
+
+        gap: 13px;
+    }
+
+    .dashboard-nav {
+        flex-wrap: wrap;
+
+        justify-content: center;
+
+        gap: 10px 15px;
+    }
+
+    .dashboard-main {
+        padding: 35px 16px 60px;
+    }
+
+    .dashboard-welcome {
+        padding: 25px;
+
+        flex-direction: column;
+
+        align-items: flex-start;
+    }
+
+    .dashboard-welcome-icon {
+        width: 60px;
+        height: 60px;
+
+        font-size: 28px;
+    }
+
+    .dashboard-section-heading {
+        flex-direction: column;
+
+        align-items: flex-start;
+    }
+
+    .dashboard-course-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .dashboard-actions {
+        grid-template-columns: 1fr;
+    }
+
+    .dashboard-footer {
+        padding: 20px;
+
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        gap: 8px;
+    }
+
+}
+.start-learning-btn {
+    display: inline-block;
+
+    margin-top: 14px;
+
+    padding: 10px 16px;
+
+    border-radius: 8px;
+
+    background: linear-gradient(
+        135deg,
+        #2563eb,
+        #4f46e5
+    );
+
+    color: #ffffff;
+
+    text-decoration: none;
+
+    font-size: 12px;
+    font-weight: 700;
+
+    transition: 0.2s;
+}
+
+.start-learning-btn:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 6px 15px rgba(37, 99, 235, 0.20);
+}
