@@ -29,7 +29,7 @@ if (!userData) {
     // =========================================
 
     fetch(
-        `http://localhost:3000/api/enrollments/${user.userId}`
+       `https://coursehub-production-83e3.up.railway.app/api/enrollments/${user.userId}`
     )
 
         .then(response => response.json())
