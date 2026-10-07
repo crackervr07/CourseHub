@@ -4,13 +4,19 @@ form.addEventListener("submit", async (event) => {
 
     event.preventDefault();
 
-    const email = document.getElementById("admin-email").value;
-    const password = document.getElementById("admin-password").value;
+    const email =
+        document.getElementById("admin-email").value.trim();
+
+    const password =
+        document.getElementById("admin-password").value;
+
+    const message =
+        document.getElementById("admin-login-message");
 
     try {
 
         const response = await fetch(
-           "https://coursehub-production-83e3.up.railway.app/api/admin/login"
+            "https://coursehub-production-83e3.up.railway.app/api/admin/login",
             {
                 method: "POST",
 
@@ -29,22 +35,21 @@ form.addEventListener("submit", async (event) => {
 
         if (response.ok) {
 
-           localStorage.setItem(
-    "admin",
-    JSON.stringify({
-        adminId: data.adminId,
-        email: data.email,
-        token: data.token
-    })
-);
+            localStorage.setItem(
+                "admin",
+                JSON.stringify({
+                    adminId: data.adminId,
+                    email: data.email,
+                    token: data.token
+                })
+            );
 
             window.location.href = "admin.html";
 
         } else {
 
-            document.getElementById(
-                "admin-login-message"
-            ).textContent = data.message;
+            message.textContent =
+                data.message || "Invalid admin credentials.";
 
         }
 
@@ -52,10 +57,8 @@ form.addEventListener("submit", async (event) => {
 
         console.log("Admin Login Error:", error);
 
-        document.getElementById(
-            "admin-login-message"
-        ).textContent =
-            "Server से connection नहीं हो पाया.";
+        message.textContent =
+            "Server se connection nahi ho paya.";
 
     }
 
