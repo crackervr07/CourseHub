@@ -1,5 +1,5 @@
+```html
 <!DOCTYPE html>
-
 <html lang="en">
 
 <head>
@@ -65,7 +65,6 @@
         border-radius: 10px;
     }
 
-
     /* MAIN */
 
     .checkout-container {
@@ -101,7 +100,6 @@
         font-size: 15px;
     }
 
-
     /* LAYOUT */
 
     .checkout-layout {
@@ -116,7 +114,6 @@
         flex-direction: column;
         gap: 22px;
     }
-
 
     /* CARDS */
 
@@ -142,7 +139,6 @@
     .checkout-card h2 {
         margin-bottom: 20px;
     }
-
 
     /* COURSE LIST */
 
@@ -236,7 +232,6 @@
         padding-right: 5px;
     }
 
-
     /* CUSTOMER FORM */
 
     .checkout-form {
@@ -275,6 +270,37 @@
         color: #9ca3af;
     }
 
+    .form-help {
+        margin-top: 7px;
+        color: #6b7280;
+        font-size: 11px;
+        line-height: 1.4;
+    }
+
+    /* TELEGRAM */
+
+    .telegram-group {
+        grid-column: 1 / -1;
+    }
+
+    .telegram-input-wrap {
+        position: relative;
+    }
+
+    .telegram-prefix {
+        position: absolute;
+        left: 14px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #2563eb;
+        font-weight: 700;
+        font-size: 14px;
+        pointer-events: none;
+    }
+
+    .telegram-input {
+        padding-left: 29px !important;
+    }
 
     /* ORDER SUMMARY */
 
@@ -335,7 +361,6 @@
         font-weight: 800;
     }
 
-
     /* PAYMENT BUTTON */
 
     .checkout-payment-btn {
@@ -377,7 +402,6 @@
         text-align: center;
     }
 
-
     /* MOBILE */
 
     @media (max-width: 900px) {
@@ -391,7 +415,6 @@
         }
 
     }
-
 
     @media (max-width: 650px) {
 
@@ -459,6 +482,10 @@
             gap: 15px;
         }
 
+        .telegram-group {
+            grid-column: auto;
+        }
+
     }
 
 </style>
@@ -487,190 +514,4 @@
 
 <!-- MAIN -->
 
-<main class="checkout-container">
-
-
-    <div class="checkout-heading">
-
-        <h1>
-            Complete Your Purchase
-        </h1>
-
-        <p>
-            Review your selected courses and continue to payment.
-        </p>
-
-    </div>
-
-
-    <div class="checkout-layout">
-
-
-        <!-- LEFT SIDE -->
-
-        <section class="checkout-left">
-
-
-            <!-- COURSES -->
-
-            <div class="checkout-card">
-
-                <h2>
-                    Your Courses
-                </h2>
-
-                <div
-                    id="checkout-items"
-                    class="checkout-items"
-                ></div>
-
-            </div>
-
-
-            <!-- CUSTOMER -->
-
-            <div class="checkout-card">
-
-                <h2>
-                    Customer Information
-                </h2>
-
-                <div class="checkout-form">
-
-
-                    <div class="form-group">
-
-                        <label for="customer-name">
-                            Full Name
-                        </label>
-
-                        <input
-                            type="text"
-                            id="customer-name"
-                            placeholder="Enter your full name"
-                        >
-
-                    </div>
-
-
-                    <div class="form-group">
-
-                        <label for="customer-email">
-                            Email Address
-                        </label>
-
-                        <input
-                            type="email"
-                            id="customer-email"
-                            placeholder="Enter your email address"
-                        >
-
-                    </div>
-
-
-                </div>
-
-            </div>
-
-
-        </section>
-
-
-        <!-- RIGHT SIDE -->
-
-        <aside class="checkout-right">
-
-
-            <div class="order-summary">
-
-                <h2>
-                    Order Summary
-                </h2>
-
-
-                <div class="summary-row">
-
-                    <span>
-                        Courses
-                    </span>
-
-                    <strong id="summary-course">
-                        —
-                    </strong>
-
-                </div>
-
-
-                <div class="summary-row">
-
-                    <span>
-                        Subtotal
-                    </span>
-
-                    <strong id="summary-price">
-                        ₹0
-                    </strong>
-
-                </div>
-
-
-                <div class="summary-row">
-
-                    <span>
-                        Platform Fee
-                    </span>
-
-                    <strong>
-                        FREE
-                    </strong>
-
-                </div>
-
-
-                <div class="summary-divider"></div>
-
-
-                <div class="summary-total">
-
-                    <span>
-                        Total Amount
-                    </span>
-
-                    <strong id="summary-total">
-                        ₹0
-                    </strong>
-
-                </div>
-
-
-                <button
-                    id="proceed-payment"
-                    class="checkout-payment-btn"
-                >
-                    Proceed to Payment →
-                </button>
-
-
-                <p class="secure-note">
-                    🔒 Your payment information is securely handled.
-                </p>
-
-            </div>
-
-
-        </aside>
-
-
-    </div>
-
-
-</main>
-
-
-<!-- CHECKOUT JAVASCRIPT -->
-
-<script src="checkout.js?v=5"></script>
-
-</body>
-
-</html>
+<main class="
