@@ -10,19 +10,12 @@ const proceedPayment = document.getElementById("proceed-payment");
 
 function getCart() {
     try {
-        const cart =
-            JSON.parse(localStorage.getItem("courseCart")) || [];
-
-        console.log("Checkout Cart:", cart);
-
-        return cart;
-
+        return JSON.parse(localStorage.getItem("courseCart")) || [];
     } catch (error) {
         console.log("Cart error:", error);
         return [];
     }
 }
-
 
 // ===============================
 // DISPLAY CHECKOUT
@@ -32,25 +25,15 @@ function displayCheckout() {
 
     const cart = getCart();
 
-    console.log("Number of courses:", cart.length);
-
     if (!cart.length) {
-
         alert("Your cart is empty.");
-
         window.location.href = "index.html";
-
         return;
     }
 
     let total = 0;
 
     checkoutItems.innerHTML = "";
-
-
-    // ===============================
-    // SHOW ALL COURSES
-    // ===============================
 
     cart.forEach((course) => {
 
@@ -112,37 +95,21 @@ function displayCheckout() {
         `;
 
         checkoutItems.appendChild(item);
-
     });
 
-
-    // ===============================
-    // SUMMARY
-    // ===============================
-
     if (summaryCourse) {
-
         summaryCourse.textContent =
             `${cart.length} Course${cart.length > 1 ? "s" : ""}`;
-
     }
 
     if (summaryPrice) {
-
-        summaryPrice.textContent =
-            `₹${total}`;
-
+        summaryPrice.textContent = `₹${total}`;
     }
 
     if (summaryTotal) {
-
-        summaryTotal.textContent =
-            `₹${total}`;
-
+        summaryTotal.textContent = `₹${total}`;
     }
-
 }
-
 
 // ===============================
 // PROCEED TO PAYMENT
@@ -150,75 +117,122 @@ function displayCheckout() {
 
 if (proceedPayment) {
 
-    proceedPayment.addEventListener(
-        "click",
-        function () {
+    proceedPayment.addEventListener("click", function () {
 
-            const name =
-                document
-                    .getElementById("customer-name")
-                    ?.value
-                    .trim();
+        const name =
+            document.getElementById("customer-name")?.value.trim();
 
-            const email =
-                document
-                    .getElementById("customer-email")
-                    ?.value
-                    .trim();
+        const email =
+            document.getElementById("customer-email")?.value.trim();
 
+        const password =
+            document.getElementById("customer-password")?.value;
 
-            if (!name) {
+        const confirmPassword =
+            document.getElementById("customer-confirm-password")?.value;
 
-                alert("Please enter your full name.");
-
-                return;
-            }
+        const telegramUsername =
+            document.getElementById("telegram-username")?.value.trim();
 
 
-            if (!email) {
+        // ===============================
+        // VALIDATION
+        // ===============================
 
-                alert("Please enter your email.");
-
-                return;
-            }
-
-
-            const cart = getCart();
-
-
-            if (!cart.length) {
-
-                alert("Your cart is empty.");
-
-                return;
-            }
-
-
-            localStorage.setItem(
-                "customerName",
-                name
-            );
-
-            localStorage.setItem(
-                "customerEmail",
-                email
-            );
-
-
-            localStorage.setItem(
-                "checkoutCart",
-                JSON.stringify(cart)
-            );
-
-
-            window.location.href =
-                "payment.html";
-
+        if (!name) {
+            alert("Please enter your full name.");
+            return;
         }
-    );
 
+        if (!email) {
+            alert("Please enter your email.");
+            return;
+        }
+
+        if (!password) {
+            alert("Please create a password.");
+            return;
+        }
+
+        if (password.length < 6) {
+            alert("Password must be at least 6 characters.");
+            return;
+        }
+
+        if (!confirmPassword) {
+            alert("Please confirm your password.");
+            return;
+        }
+
+        if (password !== confirmPassword) {
+            alert("Passwords do not match.");
+            return;
+        }
+
+        if (!telegramUsername) {
+            alert("Please enter your Telegram username.");
+            return;
+        }
+
+
+        // ===============================
+        // CART CHECK
+        // ===============================
+
+        const cart = getCart();
+
+        if (!cart.length) {
+            alert("Your cart is empty.");
+            return;
+        }
+
+
+        // ===============================
+        // CLEAN TELEGRAM USERNAME
+        // ===============================
+
+        const cleanTelegramUsername =
+            telegramUsername.replace(/^@+/, "");
+
+
+        // ===============================
+        // SAVE CUSTOMER DETAILS
+        // ===============================
+
+        localStorage.setItem(
+            "customerName",
+            name
+        );
+
+        localStorage.setItem(
+            "customerEmail",
+            email
+        );
+
+        localStorage.setItem(
+            "customerPassword",
+            password
+        );
+
+        localStorage.setItem(
+            "customerTelegram",
+            cleanTelegramUsername
+        );
+
+        localStorage.setItem(
+            "checkoutCart",
+            JSON.stringify(cart)
+        );
+
+
+        // ===============================
+        // GO TO PAYMENT
+        // ===============================
+
+        window.location.href = "payment.html";
+
+    });
 }
-
 
 // ===============================
 // START
