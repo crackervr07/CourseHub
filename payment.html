@@ -478,7 +478,10 @@
                         return;
 
                     }
-
+localStorage.setItem(
+    "checkoutCart",
+    JSON.stringify(cart)
+);
 
                     window.location.href =
                         "payment-success.html";
