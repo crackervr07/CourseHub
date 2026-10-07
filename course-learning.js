@@ -2,7 +2,11 @@
 // COURSE ACCESS CHECK
 // =========================================
 
-const userData = localStorage.getItem("user");
+const API_URL =
+    "https://coursehub-production-83e3.up.railway.app";
+
+const userData =
+    localStorage.getItem("user");
 
 if (!userData) {
     window.location.href = "login.html";
@@ -14,11 +18,16 @@ if (!userData) {
 // GET USER + COURSE ID
 // =========================================
 
-const user = JSON.parse(userData);
+const user =
+    JSON.parse(userData);
 
-const params = new URLSearchParams(window.location.search);
+const params =
+    new URLSearchParams(
+        window.location.search
+    );
 
-const courseId = params.get("id");
+const courseId =
+    params.get("id");
 
 
 // =========================================
@@ -46,15 +55,19 @@ async function checkCourseAccess() {
 
     try {
 
-        const response = await fetch(
-            `https://coursehub-production-83e3.up.railway.app/api/course-access/${user.userId}/${courseId}`
-        );
+        const response =
+            await fetch(
+                `${API_URL}/api/course-access/${user.userId}/${courseId}`
+            );
 
         if (!response.ok) {
-            throw new Error("Access check failed");
+            throw new Error(
+                "Access check failed"
+            );
         }
 
-        const data = await response.json();
+        const data =
+            await response.json();
 
         if (!data.access) {
 
@@ -101,11 +114,13 @@ async function loadTelegramAccess() {
 
     try {
 
-        const response = await fetch(
-            `http://localhost:3000/api/course-telegram/${user.userId}/${courseId}`
-        );
+        const response =
+            await fetch(
+                `${API_URL}/api/course-telegram/${user.userId}/${courseId}`
+            );
 
-        const data = await response.json();
+        const data =
+            await response.json();
 
         console.log(
             "Telegram access:",
@@ -146,7 +161,6 @@ async function loadTelegramAccess() {
         telegramButton.style.display =
             "none";
 
-
     } catch (error) {
 
         console.log(
@@ -182,7 +196,6 @@ async function loadCourse() {
     const hasAccess =
         await checkCourseAccess();
 
-
     if (!hasAccess) {
         return;
     }
@@ -192,7 +205,7 @@ async function loadCourse() {
 
         const response =
             await fetch(
-                `http://localhost:3000/api/courses/${courseId}`
+                `${API_URL}/api/courses/${courseId}`
             );
 
 
@@ -250,7 +263,6 @@ async function loadCourse() {
         // =====================================
 
         await loadTelegramAccess();
-
 
     } catch (error) {
 
