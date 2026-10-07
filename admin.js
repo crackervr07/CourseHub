@@ -2,7 +2,7 @@
 // COURSEHUB ADMIN PANEL
 // =========================================
 
-const API_URL = "http://localhost:3000";
+const API_URL = "https://coursehub-production-83e3.up.railway.app";
 
 let allCourses = [];
 
