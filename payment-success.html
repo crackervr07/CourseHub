@@ -462,7 +462,7 @@
                     );
 
                     window.location.href =
-                        "loging.html";
+                        "login.html";
 
                     return;
 
@@ -562,14 +562,14 @@
 
 
                 // =================================
-                // SEND PAYMENT
+                // SEND PAYMENT TO RAILWAY
                 // =================================
 
                 try {
 
                     const response =
                         await fetch(
-                         https://coursehub-production-83e3.up.railway.app/api/payments
+                            "https://coursehub-production-83e3.up.railway.app/api/payments",
                             {
                                 method: "POST",
 
@@ -637,7 +637,8 @@
 
 
                     alert(
-                        error.message
+                        error.message ||
+                        "Payment submission failed."
                     );
 
 
