@@ -20,11 +20,51 @@ app.use(express.urlencoded({
 
 
 // =========================================
+// DATABASE MIGRATION
+// =========================================
+
+try {
+
+    const userColumns = db.prepare(`
+        PRAGMA table_info(users)
+    `).all();
+
+    const telegramColumnExists =
+        userColumns.some(
+            column => column.name === "telegram_username"
+        );
+
+    if (!telegramColumnExists) {
+
+        db.prepare(`
+            ALTER TABLE users
+            ADD COLUMN telegram_username TEXT
+        `).run();
+
+        console.log(
+            "Added telegram_username column to users table"
+        );
+
+    }
+
+} catch (error) {
+
+    console.log(
+        "Database migration error:",
+        error
+    );
+
+}
+
+
+// =========================================
 // HOME
 // =========================================
 
 app.get("/", (req, res) => {
+
     res.send("CourseHub Backend is Running 🚀");
+
 });
 
 
@@ -36,20 +76,20 @@ app.get("/api/courses", (req, res) => {
 
     try {
 
-      const courses = db.prepare(`
-    SELECT
-        id,
-        title,
-        price,
-        duration,
-        level,
-        lessons,
-        description,
-        image,
-        category
-    FROM courses
-    ORDER BY id DESC
-`).all();
+        const courses = db.prepare(`
+            SELECT
+                id,
+                title,
+                price,
+                duration,
+                level,
+                lessons,
+                description,
+                image,
+                category
+            FROM courses
+            ORDER BY id DESC
+        `).all();
 
         res.json(courses);
 
@@ -64,6 +104,7 @@ app.get("/api/courses", (req, res) => {
     }
 
 });
+
 
 // =========================================
 // GET SINGLE COURSE
@@ -111,6 +152,7 @@ app.get("/api/courses/:id", (req, res) => {
     }
 
 });
+
 
 // =========================================
 // SIGNUP
@@ -238,6 +280,7 @@ app.post("/api/login", (req, res) => {
 
 });
 
+
 // =========================================
 // ADMIN AUTHENTICATION
 // =========================================
@@ -245,7 +288,9 @@ app.post("/api/login", (req, res) => {
 const adminTokens = new Map();
 
 function generateAdminToken() {
+
     return crypto.randomBytes(32).toString("hex");
+
 }
 
 function requireAdmin(req, res, next) {
@@ -262,7 +307,10 @@ function requireAdmin(req, res, next) {
     }
 
     next();
+
 }
+
+
 // =========================================
 // ADMIN LOGIN
 // =========================================
@@ -304,17 +352,17 @@ app.post("/api/admin/login", (req, res) => {
 
         const token = generateAdminToken();
 
-adminTokens.set(token, {
-    adminId: admin.id,
-    email: admin.email
-});
+        adminTokens.set(token, {
+            adminId: admin.id,
+            email: admin.email
+        });
 
-res.json({
-    message: "Admin login successful",
-    adminId: admin.id,
-    email: admin.email,
-    token: token
-});
+        res.json({
+            message: "Admin login successful",
+            adminId: admin.id,
+            email: admin.email,
+            token: token
+        });
 
     } catch (error) {
 
@@ -699,6 +747,7 @@ app.get(
     }
 );
 
+
 // =========================================
 // CREATE CART ORDER
 // =========================================
@@ -767,33 +816,198 @@ app.post("/api/cart-order", (req, res) => {
 
 });
 
+
 // =========================================
 // SUBMIT PAYMENT
+// GUEST CHECKOUT
 // =========================================
 
 app.post("/api/payments", (req, res) => {
 
     const {
         userId,
+        name,
+        email,
+        password,
+        telegramUsername,
         courseIds,
         utr,
         amount
     } = req.body;
 
+
+    // =========================================
+    // BASIC VALIDATION
+    // =========================================
+
     if (
-        !userId ||
         !Array.isArray(courseIds) ||
         courseIds.length === 0 ||
         !utr
     ) {
 
         return res.status(400).json({
-            message: "User ID, courses and UTR are required"
+            message: "Courses and UTR are required"
         });
 
     }
 
+
+    // Guest checkout requires customer details
+
+    if (
+        !userId &&
+        (
+            !name ||
+            !email ||
+            !password ||
+            !telegramUsername
+        )
+    ) {
+
+        return res.status(400).json({
+            message:
+                "Name, email, password and Telegram username are required"
+        });
+
+    }
+
+
     try {
+
+
+        // =========================================
+        // FIND / CREATE USER
+        // =========================================
+
+        let customerUserId;
+        let customerName;
+        let customerEmail;
+        let customerTelegram;
+
+
+        if (userId) {
+
+
+            // Existing logged-in user
+
+            const existingUser = db.prepare(`
+                SELECT *
+                FROM users
+                WHERE id = ?
+            `).get(userId);
+
+
+            if (!existingUser) {
+
+                return res.status(404).json({
+                    message: "User not found"
+                });
+
+            }
+
+
+            customerUserId =
+                existingUser.id;
+
+            customerName =
+                existingUser.name;
+
+            customerEmail =
+                existingUser.email;
+
+            customerTelegram =
+                existingUser.telegram_username || "";
+
+
+        } else {
+
+
+            // =========================================
+            // GUEST CUSTOMER DETAILS
+            // =========================================
+
+            customerEmail =
+                String(email)
+                    .trim()
+                    .toLowerCase();
+
+            customerName =
+                String(name)
+                    .trim();
+
+            customerTelegram =
+                String(telegramUsername)
+                    .trim()
+                    .replace(/^@+/, "");
+
+
+            // =========================================
+            // CHECK EXISTING EMAIL
+            // =========================================
+
+            const existingUser = db.prepare(`
+                SELECT *
+                FROM users
+                WHERE email = ?
+            `).get(customerEmail);
+
+
+            if (existingUser) {
+
+
+                customerUserId =
+                    existingUser.id;
+
+
+                // Update customer details
+
+                db.prepare(`
+                    UPDATE users
+                    SET
+                        name = ?,
+                        password = ?,
+                        telegram_username = ?
+                    WHERE id = ?
+                `).run(
+                    customerName,
+                    password,
+                    customerTelegram,
+                    existingUser.id
+                );
+
+
+            } else {
+
+
+                // =========================================
+                // CREATE CUSTOMER ACCOUNT
+                // =========================================
+
+                const newUser = db.prepare(`
+                    INSERT INTO users
+                    (
+                        name,
+                        email,
+                        password,
+                        telegram_username
+                    )
+                    VALUES (?, ?, ?, ?)
+                `).run(
+                    customerName,
+                    customerEmail,
+                    password,
+                    customerTelegram
+                );
+
+
+                customerUserId =
+                    newUser.lastInsertRowid;
+
+            }
+
+        }
+
 
         // =========================================
         // CHECK ALL COURSES
@@ -802,16 +1016,19 @@ app.post("/api/payments", (req, res) => {
         const placeholders =
             courseIds.map(() => "?").join(",");
 
+
         const courses = db.prepare(`
             SELECT *
             FROM courses
             WHERE id IN (${placeholders})
         `).all(...courseIds);
 
+
         if (courses.length !== courseIds.length) {
 
             return res.status(400).json({
-                message: "One or more courses not found"
+                message:
+                    "One or more courses not found"
             });
 
         }
@@ -827,10 +1044,12 @@ app.post("/api/payments", (req, res) => {
             WHERE utr = ?
         `).get(utr);
 
+
         if (existingPayment) {
 
             return res.status(400).json({
-                message: "This UTR has already been submitted"
+                message:
+                    "This UTR has already been submitted"
             });
 
         }
@@ -853,30 +1072,34 @@ app.post("/api/payments", (req, res) => {
         `);
 
 
-        const createPayments = db.transaction(() => {
+        const createPayments =
+            db.transaction(() => {
 
-            const paymentIds = [];
+                const paymentIds = [];
 
-            for (const course of courses) {
 
-                const payment =
-                    insertPayment.run(
-                        userId,
-                        course.id,
-                        utr,
-                        course.price,
-                        "pending"
+                for (const course of courses) {
+
+                    const payment =
+                        insertPayment.run(
+                            customerUserId,
+                            course.id,
+                            utr,
+                            course.price,
+                            "pending"
+                        );
+
+
+                    paymentIds.push(
+                        payment.lastInsertRowid
                     );
 
-                paymentIds.push(
-                    payment.lastInsertRowid
-                );
+                }
 
-            }
 
-            return paymentIds;
+                return paymentIds;
 
-        });
+            });
 
 
         const paymentIds =
@@ -891,6 +1114,18 @@ app.post("/api/payments", (req, res) => {
 
             message:
                 "Payment submitted successfully",
+
+            userId:
+                customerUserId,
+
+            userName:
+                customerName,
+
+            userEmail:
+                customerEmail,
+
+            telegramUsername:
+                customerTelegram,
 
             paymentIds:
                 paymentIds,
@@ -910,12 +1145,15 @@ app.post("/api/payments", (req, res) => {
 
         });
 
+
     } catch (error) {
+
 
         console.log(
             "Payment submit error:",
             error
         );
+
 
         res.status(500).json({
             message:
@@ -945,6 +1183,8 @@ app.get("/api/payments", requireAdmin, (req, res) => {
 
                 users.email AS user_email,
 
+                users.telegram_username AS telegram_username,
+
                 payments.utr,
 
                 GROUP_CONCAT(
@@ -952,11 +1192,14 @@ app.get("/api/payments", requireAdmin, (req, res) => {
                     '||'
                 ) AS course_titles,
 
-               SUM(CAST(payments.amount AS INTEGER)) AS amount,
+                SUM(
+                    CAST(payments.amount AS INTEGER)
+                ) AS amount,
 
                 payments.status,
 
-                MAX(payments.payment_date) AS payment_date
+                MAX(payments.payment_date)
+                    AS payment_date
 
             FROM payments
 
@@ -975,14 +1218,18 @@ app.get("/api/payments", requireAdmin, (req, res) => {
 
         `).all();
 
+
         res.json(payments);
 
+
     } catch (error) {
+
 
         console.log(
             "Payments fetch error:",
             error
         );
+
 
         res.status(500).json({
             message:
@@ -998,66 +1245,216 @@ app.get("/api/payments", requireAdmin, (req, res) => {
 // VERIFY PAYMENT
 // =========================================
 
-app.put("/api/payments/:id/verify", requireAdmin, (req, res) => {
+app.put(
+    "/api/payments/:id/verify",
+    requireAdmin,
+    (req, res) => {
 
-    const paymentId = parseInt(req.params.id);
+        const paymentId =
+            parseInt(req.params.id);
 
-    try {
 
-        // =========================================
-        // FIND PAYMENT
-        // =========================================
+        try {
 
-        const payment = db.prepare(`
-            SELECT *
-            FROM payments
-            WHERE id = ?
-        `).get(paymentId);
 
-        if (!payment) {
+            // =========================================
+            // FIND PAYMENT
+            // =========================================
 
-            return res.status(404).json({
-                message: "Payment not found"
+            const payment = db.prepare(`
+                SELECT *
+                FROM payments
+                WHERE id = ?
+            `).get(paymentId);
+
+
+            if (!payment) {
+
+                return res.status(404).json({
+                    message: "Payment not found"
+                });
+
+            }
+
+
+            // =========================================
+            // FIND ALL COURSES OF PAYMENT
+            // SAME USER + SAME UTR
+            // =========================================
+
+            const payments = db.prepare(`
+                SELECT *
+                FROM payments
+                WHERE user_id = ?
+                AND utr = ?
+            `).all(
+                payment.user_id,
+                payment.utr
+            );
+
+
+            if (!payments.length) {
+
+                return res.status(404).json({
+                    message:
+                        "Payment courses not found"
+                });
+
+            }
+
+
+            // =========================================
+            // VERIFY + ENROLL
+            // =========================================
+
+            const verifyPayment =
+                db.transaction(() => {
+
+
+                    // Mark payments verified
+
+                    db.prepare(`
+                        UPDATE payments
+                        SET status = 'verified'
+                        WHERE user_id = ?
+                        AND utr = ?
+                    `).run(
+                        payment.user_id,
+                        payment.utr
+                    );
+
+
+                    // Enrollment statements
+
+                    const checkEnrollment =
+                        db.prepare(`
+                            SELECT *
+                            FROM enrollments
+                            WHERE user_id = ?
+                            AND course_id = ?
+                        `);
+
+
+                    const addEnrollment =
+                        db.prepare(`
+                            INSERT INTO enrollments
+                            (
+                                user_id,
+                                course_id
+                            )
+                            VALUES (?, ?)
+                        `);
+
+
+                    // Enroll every purchased course
+
+                    for (const item of payments) {
+
+                        const existingEnrollment =
+                            checkEnrollment.get(
+                                payment.user_id,
+                                item.course_id
+                            );
+
+
+                        if (!existingEnrollment) {
+
+                            addEnrollment.run(
+                                payment.user_id,
+                                item.course_id
+                            );
+
+                        }
+
+                    }
+
+                });
+
+
+            verifyPayment();
+
+
+            // =========================================
+            // SUCCESS
+            // =========================================
+
+            res.json({
+
+                message:
+                    "Payment verified and all courses enrolled successfully",
+
+                courses:
+                    payments.map(
+                        item => item.course_id
+                    )
+
+            });
+
+
+        } catch (error) {
+
+
+            console.log(
+                "Payment verification error:",
+                error
+            );
+
+
+            res.status(500).json({
+                message:
+                    "Payment verification failed"
             });
 
         }
 
-
-        // =========================================
-        // FIND ALL COURSES OF THIS PAYMENT
-        // SAME USER + SAME UTR
-        // =========================================
-
-        const payments = db.prepare(`
-            SELECT *
-            FROM payments
-            WHERE user_id = ?
-            AND utr = ?
-        `).all(
-            payment.user_id,
-            payment.utr
-        );
-
-        if (!payments.length) {
-
-            return res.status(404).json({
-                message: "Payment courses not found"
-            });
-
-        }
+    }
+);
 
 
-        // =========================================
-        // VERIFY ALL PAYMENTS + ENROLL ALL COURSES
-        // =========================================
+// =========================================
+// REJECT PAYMENT
+// =========================================
 
-        const verifyPayment = db.transaction(() => {
+app.put(
+    "/api/payments/:id/reject",
+    requireAdmin,
+    (req, res) => {
 
-            // Mark all related payments as verified
+        const paymentId =
+            parseInt(req.params.id);
+
+
+        try {
+
+
+            // =========================================
+            // FIND PAYMENT
+            // =========================================
+
+            const payment = db.prepare(`
+                SELECT *
+                FROM payments
+                WHERE id = ?
+            `).get(paymentId);
+
+
+            if (!payment) {
+
+                return res.status(404).json({
+                    message: "Payment not found"
+                });
+
+            }
+
+
+            // =========================================
+            // REJECT ALL COURSES
+            // SAME USER + SAME UTR
+            // =========================================
 
             db.prepare(`
                 UPDATE payments
-                SET status = 'verified'
+                SET status = 'rejected'
                 WHERE user_id = ?
                 AND utr = ?
             `).run(
@@ -1066,350 +1463,85 @@ app.put("/api/payments/:id/verify", requireAdmin, (req, res) => {
             );
 
 
-            // Enroll every purchased course
+            // =========================================
+            // SUCCESS
+            // =========================================
 
-            const checkEnrollment = db.prepare(`
-                SELECT *
-                FROM enrollments
-                WHERE user_id = ?
-                AND course_id = ?
-            `);
+            res.json({
 
-            const addEnrollment = db.prepare(`
-                INSERT INTO enrollments
-                (
-                    user_id,
-                    course_id
-                )
-                VALUES (?, ?)
-            `);
+                message:
+                    "Payment rejected successfully"
+
+            });
 
 
-            for (const item of payments) {
-
-                const existingEnrollment =
-                    checkEnrollment.get(
-                        payment.user_id,
-                        item.course_id
-                    );
-
-                if (!existingEnrollment) {
-
-                    addEnrollment.run(
-                        payment.user_id,
-                        item.course_id
-                    );
-
-                }
-
-            }
-
-        });
+        } catch (error) {
 
 
-        verifyPayment();
+            console.log(
+                "Reject payment error:",
+                error
+            );
 
 
-        // =========================================
-        // SUCCESS
-        // =========================================
-
-        res.json({
-
-            message:
-                "Payment verified and all courses enrolled successfully",
-
-            courses:
-                payments.map(
-                    item => item.course_id
-                )
-
-        });
-
-    } catch (error) {
-
-        console.log(
-            "Payment verification error:",
-            error
-        );
-
-        res.status(500).json({
-            message:
-                "Payment verification failed"
-        });
-
-    }
-
-});
-
-
-// =========================================
-// REJECT PAYMENT
-// =========================================
-
-app.put("/api/payments/:id/reject", requireAdmin, (req, res) => {
-
-    const paymentId = parseInt(req.params.id);
-
-    try {
-
-        // =========================================
-        // FIND PAYMENT
-        // =========================================
-
-        const payment = db.prepare(`
-            SELECT *
-            FROM payments
-            WHERE id = ?
-        `).get(paymentId);
-
-        if (!payment) {
-
-            return res.status(404).json({
-                message: "Payment not found"
+            res.status(500).json({
+                message:
+                    "Unable to reject payment"
             });
 
         }
 
-
-        // =========================================
-        // REJECT ALL COURSES
-        // WITH SAME USER + SAME UTR
-        // =========================================
-
-        db.prepare(`
-            UPDATE payments
-            SET status = 'rejected'
-            WHERE user_id = ?
-            AND utr = ?
-        `).run(
-            payment.user_id,
-            payment.utr
-        );
-
-
-        // =========================================
-        // SUCCESS
-        // =========================================
-
-        res.json({
-
-            message:
-                "Payment rejected successfully"
-
-        });
-
-    } catch (error) {
-
-        console.log(
-            "Reject payment error:",
-            error
-        );
-
-        res.status(500).json({
-            message:
-                "Unable to reject payment"
-        });
-
     }
+);
 
-});
 
 // =========================================
 // ADMIN COURSES
 // =========================================
 
-app.get("/api/admin/courses", requireAdmin, (req, res) => {
+app.get(
+    "/api/admin/courses",
+    requireAdmin,
+    (req, res) => {
 
-    try {
+        try {
 
-        const courses = db.prepare(`
-            SELECT *
-            FROM courses
-            ORDER BY id DESC
-        `).all();
+            const courses = db.prepare(`
+                SELECT *
+                FROM courses
+                ORDER BY id DESC
+            `).all();
 
-        res.json(courses);
+            res.json(courses);
 
-    } catch (error) {
+        } catch (error) {
 
-        console.log("Admin courses error:", error);
+            console.log(
+                "Admin courses error:",
+                error
+            );
 
-        res.status(500).json({
-            message: "Unable to load admin courses"
-        });
+            res.status(500).json({
+                message:
+                    "Unable to load admin courses"
+            });
+
+        }
 
     }
+);
 
-});
+
 // =========================================
 // ADD COURSE
 // =========================================
 
-app.post("/api/courses", requireAdmin, (req, res) => {
+app.post(
+    "/api/courses",
+    requireAdmin,
+    (req, res) => {
 
-    const {
-        title,
-        price,
-        duration,
-        level,
-        lessons,
-        description,
-        image,
-        category,
-        telegram_link
-    } = req.body;
-
-    if (!title || price === undefined) {
-
-        return res.status(400).json({
-            message: "Title and price are required"
-        });
-
-    }
-
-    try {
-
-        const result = db.prepare(`
-            INSERT INTO courses
-            (
-                title,
-                price,
-                duration,
-                level,
-                lessons,
-                description,
-                image,
-                category,
-                telegram_link
-            )
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-        `).run(
-            title,
-            price,
-            duration || "",
-            level || "",
-            lessons || 0,
-            description || "",
-            image || "",
-            category || "",
-            telegram_link || ""
-        );
-
-        res.json({
-            message: "Course added successfully",
-            courseId: result.lastInsertRowid
-        });
-
-    } catch (error) {
-
-        console.log("Add course error:", error);
-
-        res.status(500).json({
-            message: "Unable to add course"
-        });
-
-    }
-
-});
-
-
-// =========================================
-// DELETE COURSE
-// =========================================
-
-app.delete("/api/courses/:id", requireAdmin, (req, res) => {
-
-    const courseId = parseInt(req.params.id);
-
-    try {
-
-        const course = db.prepare(`
-            SELECT *
-            FROM courses
-            WHERE id = ?
-        `).get(courseId);
-
-        if (!course) {
-
-            return res.status(404).json({
-                message: "Course not found"
-            });
-
-        }
-
-        db.prepare(`
-            DELETE FROM courses
-            WHERE id = ?
-        `).run(courseId);
-
-        res.json({
-            message: "Course deleted successfully"
-        });
-
-    } catch (error) {
-
-        console.log("Delete course error:", error);
-
-        res.status(500).json({
-            message: "Unable to delete course"
-        });
-
-    }
-
-});
-
-
-// =========================================
-// UPDATE COURSE
-// =========================================
-
-app.put("/api/courses/:id", requireAdmin, (req, res) => {
-
-    const courseId = parseInt(req.params.id);
-
-    const {
-        title,
-        price,
-        duration,
-        level,
-        lessons,
-        description,
-        image,
-        category,
-        telegram_link
-    } = req.body;
-
-    try {
-
-        const course = db.prepare(`
-            SELECT *
-            FROM courses
-            WHERE id = ?
-        `).get(courseId);
-
-        if (!course) {
-
-            return res.status(404).json({
-                message: "Course not found"
-            });
-
-        }
-
-        db.prepare(`
-            UPDATE courses
-            SET
-                title = ?,
-                price = ?,
-                duration = ?,
-                level = ?,
-                lessons = ?,
-                description = ?,
-                image = ?,
-                category = ?,
-                telegram_link = ?
-            WHERE id = ?
-        `).run(
+        const {
             title,
             price,
             duration,
@@ -1418,25 +1550,238 @@ app.put("/api/courses/:id", requireAdmin, (req, res) => {
             description,
             image,
             category,
-            telegram_link,
-            courseId
-        );
+            telegram_link
+        } = req.body;
 
-        res.json({
-            message: "Course updated successfully"
-        });
 
-    } catch (error) {
+        if (!title || price === undefined) {
 
-        console.log("Update course error:", error);
+            return res.status(400).json({
+                message:
+                    "Title and price are required"
+            });
 
-        res.status(500).json({
-            message: "Unable to update course"
-        });
+        }
+
+
+        try {
+
+            const result = db.prepare(`
+                INSERT INTO courses
+                (
+                    title,
+                    price,
+                    duration,
+                    level,
+                    lessons,
+                    description,
+                    image,
+                    category,
+                    telegram_link
+                )
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+            `).run(
+                title,
+                price,
+                duration || "",
+                level || "",
+                lessons || 0,
+                description || "",
+                image || "",
+                category || "",
+                telegram_link || ""
+            );
+
+
+            res.json({
+                message:
+                    "Course added successfully",
+
+                courseId:
+                    result.lastInsertRowid
+            });
+
+
+        } catch (error) {
+
+
+            console.log(
+                "Add course error:",
+                error
+            );
+
+
+            res.status(500).json({
+                message:
+                    "Unable to add course"
+            });
+
+        }
 
     }
+);
 
-});
+
+// =========================================
+// DELETE COURSE
+// =========================================
+
+app.delete(
+    "/api/courses/:id",
+    requireAdmin,
+    (req, res) => {
+
+        const courseId =
+            parseInt(req.params.id);
+
+
+        try {
+
+            const course = db.prepare(`
+                SELECT *
+                FROM courses
+                WHERE id = ?
+            `).get(courseId);
+
+
+            if (!course) {
+
+                return res.status(404).json({
+                    message:
+                        "Course not found"
+                });
+
+            }
+
+
+            db.prepare(`
+                DELETE FROM courses
+                WHERE id = ?
+            `).run(courseId);
+
+
+            res.json({
+                message:
+                    "Course deleted successfully"
+            });
+
+
+        } catch (error) {
+
+
+            console.log(
+                "Delete course error:",
+                error
+            );
+
+
+            res.status(500).json({
+                message:
+                    "Unable to delete course"
+            });
+
+        }
+
+    }
+);
+
+
+// =========================================
+// UPDATE COURSE
+// =========================================
+
+app.put(
+    "/api/courses/:id",
+    requireAdmin,
+    (req, res) => {
+
+        const courseId =
+            parseInt(req.params.id);
+
+
+        const {
+            title,
+            price,
+            duration,
+            level,
+            lessons,
+            description,
+            image,
+            category,
+            telegram_link
+        } = req.body;
+
+
+        try {
+
+            const course = db.prepare(`
+                SELECT *
+                FROM courses
+                WHERE id = ?
+            `).get(courseId);
+
+
+            if (!course) {
+
+                return res.status(404).json({
+                    message:
+                        "Course not found"
+                });
+
+            }
+
+
+            db.prepare(`
+                UPDATE courses
+                SET
+                    title = ?,
+                    price = ?,
+                    duration = ?,
+                    level = ?,
+                    lessons = ?,
+                    description = ?,
+                    image = ?,
+                    category = ?,
+                    telegram_link = ?
+                WHERE id = ?
+            `).run(
+                title,
+                price,
+                duration,
+                level,
+                lessons,
+                description,
+                image,
+                category,
+                telegram_link,
+                courseId
+            );
+
+
+            res.json({
+                message:
+                    "Course updated successfully"
+            });
+
+
+        } catch (error) {
+
+
+            console.log(
+                "Update course error:",
+                error
+            );
+
+
+            res.status(500).json({
+                message:
+                    "Unable to update course"
+            });
+
+        }
+
+    }
+);
 
 
 // =========================================
