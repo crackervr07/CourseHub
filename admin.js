@@ -986,7 +986,16 @@ async function loadPaymentRequests() {
                                 ✉
                                 ${payment.user_email || "No email"}
                             </p>
-
+<p>
+    📱 Telegram:
+    <strong>
+        ${
+            payment.telegram_username
+                ? "@" + payment.telegram_username
+                : "Not provided"
+        }
+    </strong>
+</p>
 
                             <p>
                                 💰 Total:
