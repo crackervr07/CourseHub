@@ -171,6 +171,26 @@
         opacity: 0.6;
         cursor: not-allowed;
     }
+    .telegram-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    margin-top: 15px;
+    padding: 14px;
+    border-radius: 10px;
+    background: #229ED9;
+    color: white;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 700;
+    text-align: center;
+}
+
+.telegram-btn:hover {
+    background: #168ac0;
+}
 
     .note {
         margin-top: 20px;
@@ -191,6 +211,7 @@
         }
     }
 </style>
+
 
 </head>
 
@@ -294,7 +315,14 @@
             </button>
 
         </form>
-
+        <a
+            href="https://t.me/rvcourse"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="telegram-btn"
+        >
+            📩 Send Payment Screenshot on Telegram
+        </a>
         <p class="note">
             One UTR will be used for all courses
             in this order. Your courses will be
